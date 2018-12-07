@@ -13,13 +13,13 @@ import amidst.mojangapi.file.service.ClassLoaderService;
 
 @Immutable
 public class LauncherProfile {
-	private final ClassLoaderService classLoaderService = new ClassLoaderService();
-	private final DotMinecraftDirectory dotMinecraftDirectory;
-	private final ProfileDirectory profileDirectory;
-	private final VersionDirectory versionDirectory;
-	private final VersionJson versionJson;
-	private final boolean isVersionListedInProfile;
-	private final String profileName;
+	public final ClassLoaderService classLoaderService;
+	public final DotMinecraftDirectory dotMinecraftDirectory;
+	public final ProfileDirectory profileDirectory;
+	public final VersionDirectory versionDirectory;
+	public final VersionJson versionJson;
+	public final boolean isVersionListedInProfile;
+	public final String profileName;
 
 	public LauncherProfile(
 			DotMinecraftDirectory dotMinecraftDirectory,
@@ -28,6 +28,18 @@ public class LauncherProfile {
 			VersionJson versionJson,
 			boolean isVersionListedInProfile,
 			String profileName) {
+		this(new ClassLoaderService(), dotMinecraftDirectory, profileDirectory, versionDirectory, versionJson, isVersionListedInProfile, profileName);
+	}
+
+	public LauncherProfile(
+			ClassLoaderService classLoaderService,
+			DotMinecraftDirectory dotMinecraftDirectory,
+			ProfileDirectory profileDirectory,
+			VersionDirectory versionDirectory,
+			VersionJson versionJson,
+			boolean isVersionListedInProfile,
+			String profileName) {
+		this.classLoaderService = classLoaderService;
 		this.dotMinecraftDirectory = dotMinecraftDirectory;
 		this.profileDirectory = profileDirectory;
 		this.versionDirectory = versionDirectory;

@@ -15,8 +15,8 @@ import amidst.parsing.json.JsonReader;
 @Immutable
 public class UnresolvedLauncherProfile {
 	private final DotMinecraftDirectoryService dotMinecraftDirectoryService = new DotMinecraftDirectoryService();
-	private final DotMinecraftDirectory dotMinecraftDirectory;
-	private final LauncherProfileJson launcherProfileJson;
+	public final DotMinecraftDirectory dotMinecraftDirectory;
+	public final LauncherProfileJson launcherProfileJson;
 
 	public UnresolvedLauncherProfile(
 			DotMinecraftDirectory dotMinecraftDirectory,

@@ -33,7 +33,7 @@ public class ClassLoaderService {
 	}
 
 	@NotNull
-	private List<URL> getAllClassLoaderUrls(File librariesDirectory, List<LibraryJson> libraries, File versionJarFile)
+	protected List<URL> getAllClassLoaderUrls(File librariesDirectory, List<LibraryJson> libraries, File versionJarFile)
 			throws MalformedURLException {
 		List<URL> result = new LinkedList<>(getLibraryUrls(librariesDirectory, libraries));
 		result.add(versionJarFile.toURI().toURL());

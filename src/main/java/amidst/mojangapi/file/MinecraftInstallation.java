@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import amidst.documentation.Immutable;
 import amidst.logging.AmidstLogger;
+import amidst.logging.AmidstMessageBox;
 import amidst.mojangapi.file.directory.DotMinecraftDirectory;
 import amidst.mojangapi.file.directory.SaveDirectory;
 import amidst.mojangapi.file.directory.VersionDirectory;
@@ -61,13 +62,25 @@ public class MinecraftInstallation {
 	}
 
 	public List<UnresolvedLauncherProfile> readLauncherProfiles() throws FormatException, IOException {
-		return dotMinecraftDirectoryService
+		List<UnresolvedLauncherProfile> profs = dotMinecraftDirectoryService
 				.readLauncherProfilesFrom(dotMinecraftDirectory)
 				.getProfiles()
 				.values()
 				.stream()
 				.map(p -> new UnresolvedLauncherProfile(dotMinecraftDirectory, p))
 				.collect(Collectors.toList());
+		boolean addedBedrockified = false;
+		for (UnresolvedLauncherProfile prof : profs) {
+			if ("1.13.1".equals(prof.launcherProfileJson.getLastVersionId())) {
+				profs.add(0, new BedrockLauncherProfile.Unresolved(prof));
+				addedBedrockified = true;
+				break;
+			}
+		}
+		if (!addedBedrockified)
+			AmidstMessageBox.displayError("Bedrockified Error", "Bedrockified profile couldn't be created. Ensure 1.13.1 is installed.");
+
+		return profs;
 	}
 
 	public LauncherProfile newLauncherProfile(String versionId) throws FormatException, IOException {

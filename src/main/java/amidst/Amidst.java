@@ -3,6 +3,7 @@ package amidst;
 import java.io.File;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Locale;
 import java.util.prefs.Preferences;
 
 import javax.swing.SwingUtilities;
@@ -190,5 +191,20 @@ public class Amidst {
 			System.err.println(message);
 			e.printStackTrace();
 		}
+	}
+
+	public static File findBedrockified() {
+		File currentDir = new File(".");
+		File[] children = currentDir.listFiles();
+		if (children == null)
+			return null;
+
+		for (File child : children) {
+			if (child.getName().endsWith(".zip") && child.getName().toLowerCase(Locale.ENGLISH).contains("bedrockified")) {
+				return child;
+			}
+		}
+
+		return null;
 	}
 }
