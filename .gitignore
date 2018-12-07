@@ -19,3 +19,6 @@ target/
 /dependency-reduced-pom.xml
 devtools.properties
 tests
+.idea/
+amidst.iml
+bedrockified_1.0_Client.zip

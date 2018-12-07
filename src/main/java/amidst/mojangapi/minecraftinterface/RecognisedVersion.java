@@ -3,6 +3,7 @@ package amidst.mojangapi.minecraftinterface;
 import java.lang.reflect.Field;
 import java.net.URLClassLoader;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -23,6 +24,7 @@ public enum RecognisedVersion {
 	// TODO: Remove these versions before V1_0?
 	// TODO: stronghold reset on V1_9pre4?
 	UNKNOWN,
+	BEDROCKIFIED("Bedrockified", null),
 	_1_13_1    ("1.13.1",     "aduxrubomvp[Jvluxuvbvavkxbprpvccspopp"),                                                   // matches the launcher version id: 1.13.1
 	_18w33a    ("18w33a",     "adtxquaolvo[Jvkuwuubvavjxapqpuccrpnpo"),                                                   // matches the launcher version id: 18w33a
 	_18w32a    ("18w32a",     "adsxquaolvo[Jvkuwuubvavixapqpuccqpnpo"),                                                   // matches the launcher version id: 18w32a
@@ -175,6 +177,8 @@ public enum RecognisedVersion {
 
 	@NotNull
 	public static RecognisedVersion from(URLClassLoader classLoader) throws ClassNotFoundException {
+		if (classLoader.getURLs()[0].toString().toLowerCase(Locale.ENGLISH).contains("bedrockified"))
+			return BEDROCKIFIED;
 		return from(generateMagicString(classLoader));
 	}
 
