@@ -136,7 +136,8 @@ public class WorldBuilder {
 								seed,
 								biomeDataOracle,
 								versionFeatures.getValidBiomesForStructure_Village(),
-								versionFeatures.getDoComplexVillageCheck()),
+								versionFeatures.getDoComplexVillageCheck(),
+								versionFeatures.getMersenneTwister()),
 						new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.VILLAGE),
 						Dimension.OVERWORLD,
 						false),
@@ -193,7 +194,7 @@ public class WorldBuilder {
 				new StructureProducer<>(
 						Resolution.CHUNK,
 						8,
-						versionFeatures.getMineshaftAlgorithmFactory().apply(seed),
+						versionFeatures.getMineshaftAlgorithmFactory().apply(seed, versionFeatures.getMersenneTwister()),
 						new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.MINESHAFT),
 						Dimension.OVERWORLD,
 						false),
@@ -204,7 +205,8 @@ public class WorldBuilder {
 								seed,
 								biomeDataOracle,
 								versionFeatures.getValidBiomesAtMiddleOfChunk_OceanMonument(),
-								versionFeatures.getValidBiomesForStructure_OceanMonument()),
+								versionFeatures.getValidBiomesForStructure_OceanMonument(),
+								versionFeatures.getMersenneTwister()),
 						new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.OCEAN_MONUMENT),
 						Dimension.OVERWORLD,
 						false),
@@ -214,7 +216,8 @@ public class WorldBuilder {
 						new WoodlandMansionLocationChecker(
 								seed,
 								biomeDataOracle,
-								versionFeatures.getValidBiomesForStructure_WoodlandMansion()
+								versionFeatures.getValidBiomesForStructure_WoodlandMansion(),
+								versionFeatures.getMersenneTwister()
 						),
 						new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.WOODLAND_MANSION),
 						Dimension.OVERWORLD,
@@ -251,14 +254,14 @@ public class WorldBuilder {
 				new StructureProducer<>(
 						Resolution.NETHER_CHUNK,
 						88,
-						new NetherFortressAlgorithm(seed),
+						new NetherFortressAlgorithm(seed, versionFeatures.getMersenneTwister()),
 						new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.NETHER_FORTRESS),
 						Dimension.NETHER,
 						false),
 				new StructureProducer<>(
 						Resolution.CHUNK,
 						8,
-						new EndCityLocationChecker(seed),
+						new EndCityLocationChecker(seed, versionFeatures.getMersenneTwister()),
 						new EndCityWorldIconTypeProvider(),
 						Dimension.END,
 						false));

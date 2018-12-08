@@ -17,12 +17,12 @@ public class VillageLocationChecker extends AllValidLocationChecker {
 	private static final int STRUCTURE_SIZE = 0;
 
 	public VillageLocationChecker(
-			long seed, BiomeDataOracle biomeDataOracle, List<Biome> validBiomesForStructure, boolean doComplexVillageCheck) {
-		super(getLocationCheckers(seed, biomeDataOracle, validBiomesForStructure, doComplexVillageCheck));
+			long seed, BiomeDataOracle biomeDataOracle, List<Biome> validBiomesForStructure, boolean doComplexVillageCheck, boolean mersenneTwister) {
+		super(getLocationCheckers(seed, biomeDataOracle, validBiomesForStructure, doComplexVillageCheck, mersenneTwister));
 	}
 	
 	private static LocationChecker[] getLocationCheckers(
-			long seed, BiomeDataOracle biomeDataOracle, List<Biome> validBiomesForStructure, boolean doComplexVillageCheck) {
+			long seed, BiomeDataOracle biomeDataOracle, List<Biome> validBiomesForStructure, boolean doComplexVillageCheck, boolean mersenneTwister) {
 		LocationChecker base = new StructureAlgorithm(
 				seed,
 				MAGIC_NUMBER_FOR_SEED_1,
@@ -30,7 +30,8 @@ public class VillageLocationChecker extends AllValidLocationChecker {
 				MAGIC_NUMBER_FOR_SEED_3,
 				MAX_DISTANCE_BETWEEN_SCATTERED_FEATURES,
 				MIN_DISTANCE_BETWEEN_SCATTERED_FEATURES,
-				USE_TWO_VALUES_FOR_UPDATE
+				USE_TWO_VALUES_FOR_UPDATE,
+				mersenneTwister
 			);
 		LocationChecker biome = new StructureBiomeLocationChecker(biomeDataOracle, STRUCTURE_SIZE, validBiomesForStructure);
 

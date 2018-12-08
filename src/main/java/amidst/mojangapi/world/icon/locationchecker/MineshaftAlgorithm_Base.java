@@ -3,18 +3,21 @@ package amidst.mojangapi.world.icon.locationchecker;
 import java.util.Random;
 
 import amidst.documentation.Immutable;
+import amidst.mojangapi.minecraftinterface.MinecraftInterface;
 
 @Immutable
 public abstract class MineshaftAlgorithm_Base implements LocationChecker {
 	private final long seed;
+	private final boolean mersenneTwister;
 
-	public MineshaftAlgorithm_Base(long seed) {
+	public MineshaftAlgorithm_Base(long seed, boolean mersenneTwister) {
 		this.seed = seed;
+		this.mersenneTwister = mersenneTwister;
 	}
 
 	@Override
 	public boolean isValidLocation(int chunkX, int chunkY) {
-		Random random = new Random(seed);
+		Random random = mersenneTwister ? MinecraftInterface.createBedrockRandom(seed) : new Random(seed);
 
 		long var13 = (long) chunkX * random.nextLong();
 		long var15 = (long) chunkY * random.nextLong();

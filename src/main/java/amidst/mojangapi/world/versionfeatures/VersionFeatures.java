@@ -1,6 +1,7 @@
 package amidst.mojangapi.world.versionfeatures;
 
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import amidst.documentation.Immutable;
@@ -24,8 +25,8 @@ public class VersionFeatures {
 	private final List<Biome> validBiomesAtMiddleOfChunk_WitchHut;
 	private final List<Biome> validBiomesAtMiddleOfChunk_OceanRuins;
 	private final List<Biome> validBiomesAtMiddleOfChunk_Shipwreck;
-	private final Function<Long, MineshaftAlgorithm_Base> mineshaftAlgorithmFactory;
-	private final QuadFunction<Long, BiomeDataOracle, List<Biome>, List<Biome>, LocationChecker> oceanMonumentLocationCheckerFactory;
+	private final BiFunction<Long, Boolean, MineshaftAlgorithm_Base> mineshaftAlgorithmFactory;
+	private final Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker> oceanMonumentLocationCheckerFactory;
 	private final List<Biome> validBiomesAtMiddleOfChunk_OceanMonument;
 	private final List<Biome> validBiomesForStructure_OceanMonument;
 	private final List<Biome> validBiomesForStructure_WoodlandMansion;
@@ -37,6 +38,7 @@ public class VersionFeatures {
 	private final Long seedForStructure_Shipwreck;
 	private final Byte maxDistanceScatteredFeatures_Shipwreck;
 	private final Boolean buggyStructureCoordinateMath;
+	private final Boolean mersenneTwister;
 
 	public VersionFeatures(
 			List<Integer> enabledLayers,
@@ -51,8 +53,8 @@ public class VersionFeatures {
 			List<Biome> validBiomesAtMiddleOfChunk_WitchHut,
 			List<Biome> validBiomesAtMiddleOfChunk_OceanRuins,
 			List<Biome> validBiomesAtMiddleOfChunk_Shipwreck,
-			Function<Long, MineshaftAlgorithm_Base> mineshaftAlgorithmFactory,
-			QuadFunction<Long, BiomeDataOracle, List<Biome>, List<Biome>, LocationChecker> oceanMonumentLocationCheckerFactory,
+			BiFunction<Long, Boolean, MineshaftAlgorithm_Base> mineshaftAlgorithmFactory,
+			Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker> oceanMonumentLocationCheckerFactory,
 			List<Biome> validBiomesAtMiddleOfChunk_OceanMonument,
 			List<Biome> validBiomesForStructure_OceanMonument,
 			List<Biome> validBiomesForStructure_WoodlandMansion,
@@ -63,7 +65,8 @@ public class VersionFeatures {
 			Long seedForStructure_OceanRuins,
 			Long seedForStructure_Shipwreck,
 			Byte maxDistanceScatteredFeatures_Shipwreck,
-			Boolean buggyStructureCoordinateMath) {
+			Boolean buggyStructureCoordinateMath,
+			Boolean mersenneTwister) {
 		this.enabledLayers = enabledLayers;
 		this.validBiomesForStructure_Spawn = validBiomesForStructure_Spawn;
 		this.validBiomesAtMiddleOfChunk_Stronghold = validBiomesAtMiddleOfChunk_Stronghold;
@@ -89,6 +92,7 @@ public class VersionFeatures {
 		this.seedForStructure_Shipwreck = seedForStructure_Shipwreck;
 		this.maxDistanceScatteredFeatures_Shipwreck = maxDistanceScatteredFeatures_Shipwreck;
 		this.buggyStructureCoordinateMath = buggyStructureCoordinateMath;
+		this.mersenneTwister = mersenneTwister;
 	}
 
 	public boolean hasLayer(int layerId) {
@@ -139,11 +143,11 @@ public class VersionFeatures {
 		return validBiomesAtMiddleOfChunk_Shipwreck;
 	}
 
-	public Function<Long, MineshaftAlgorithm_Base> getMineshaftAlgorithmFactory() {
+	public BiFunction<Long, Boolean, MineshaftAlgorithm_Base> getMineshaftAlgorithmFactory() {
 		return mineshaftAlgorithmFactory;
 	}
 
-	public QuadFunction<Long, BiomeDataOracle, List<Biome>, List<Biome>, LocationChecker> getOceanMonumentLocationCheckerFactory() {
+	public Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker> getOceanMonumentLocationCheckerFactory() {
 		return oceanMonumentLocationCheckerFactory;
 	}
 
@@ -189,5 +193,9 @@ public class VersionFeatures {
 
 	public Boolean getBuggyStructureCoordinateMath() {
 		return buggyStructureCoordinateMath;
+	}
+
+	public Boolean getMersenneTwister() {
+		return mersenneTwister;
 	}
 }

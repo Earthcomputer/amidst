@@ -1,7 +1,10 @@
 package amidst.mojangapi.minecraftinterface;
 
 import amidst.documentation.ThreadSafe;
+import amidst.mojangapi.file.BedrockLauncherProfile;
 import amidst.mojangapi.world.WorldType;
+
+import java.util.Random;
 
 /**
  * Acts as an additional layer of abstraction for interfacing with Minecraft.
@@ -37,4 +40,15 @@ public interface MinecraftInterface {
 	public void createWorld(long seed, WorldType worldType, String generatorOptions) throws MinecraftInterfaceException;
 
 	public RecognisedVersion getRecognisedVersion();
+
+	public static Random createBedrockRandom(long seed) {
+		try {
+			Random rand = (Random) BedrockLauncherProfile.CLS_BEDROCK_RANDOM.newInstance();
+			rand.setSeed(seed);
+			return rand;
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
 }

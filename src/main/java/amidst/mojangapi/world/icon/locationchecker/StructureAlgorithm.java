@@ -3,6 +3,7 @@ package amidst.mojangapi.world.icon.locationchecker;
 import java.util.Random;
 
 import amidst.documentation.Immutable;
+import amidst.mojangapi.minecraftinterface.MinecraftInterface;
 
 @Immutable
 public class StructureAlgorithm implements LocationChecker {
@@ -14,6 +15,7 @@ public class StructureAlgorithm implements LocationChecker {
 	private final int distanceBetweenScatteredFeaturesRange;
 	private final boolean useTwoValuesForUpdate;
 	private final boolean buggyStructureCoordinateMath;
+	private final boolean mersenneTwister;
 
 	public StructureAlgorithm(
 			long seed,
@@ -22,7 +24,8 @@ public class StructureAlgorithm implements LocationChecker {
 			long magicNumberForSeed3,
 			byte maxDistanceBetweenScatteredFeatures,
 			byte minDistanceBetweenScatteredFeatures,
-			boolean useTwoValuesForUpdate) {
+			boolean useTwoValuesForUpdate,
+			boolean mersenneTwister) {
 		this(
 				seed,
 				magicNumberForSeed1,
@@ -31,7 +34,8 @@ public class StructureAlgorithm implements LocationChecker {
 				maxDistanceBetweenScatteredFeatures,
 				minDistanceBetweenScatteredFeatures,
 				useTwoValuesForUpdate,
-				false);
+				false,
+				mersenneTwister);
 	}
 
 	public StructureAlgorithm(
@@ -42,7 +46,8 @@ public class StructureAlgorithm implements LocationChecker {
 			byte maxDistanceBetweenScatteredFeatures,
 			byte minDistanceBetweenScatteredFeatures,
 			boolean useTwoValuesForUpdate,
-			boolean buggyStructureCoordinateMath) {
+			boolean buggyStructureCoordinateMath,
+			boolean mersenneTwister) {
 		this.seed = seed;
 		this.magicNumberForSeed1 = magicNumberForSeed1;
 		this.magicNumberForSeed2 = magicNumberForSeed2;
@@ -52,13 +57,14 @@ public class StructureAlgorithm implements LocationChecker {
 				- minDistanceBetweenScatteredFeatures;
 		this.useTwoValuesForUpdate = useTwoValuesForUpdate;
 		this.buggyStructureCoordinateMath = buggyStructureCoordinateMath;
+		this.mersenneTwister = mersenneTwister;
 	}
 
 	@Override
 	public boolean isValidLocation(int x, int y) {
 		int value1 = getInitialValue(x);
 		int value2 = getInitialValue(y);
-		Random random = new Random(getSeed(value1, value2));
+		Random random = mersenneTwister ? MinecraftInterface.createBedrockRandom(getSeed(value1, value2)) : new Random(getSeed(value1, value2));
 		value1 = updateValue(random, value1);
 		value2 = updateValue(random, value2);
 		return x == value1 && y == value2;

@@ -12,9 +12,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
@@ -22,6 +24,8 @@ import java.util.zip.ZipOutputStream;
 
 @Immutable
 public class BedrockLauncherProfile extends LauncherProfile {
+
+    public static Class<?> CLS_BEDROCK_RANDOM = Random.class;
 
     public BedrockLauncherProfile(LauncherProfile javaProfile, File bedrockified) {
         super(
@@ -45,6 +49,18 @@ public class BedrockLauncherProfile extends LauncherProfile {
             } catch (MalformedURLException e) {
                 throw new RuntimeException(e);
             }
+        }
+
+        @Override
+        public URLClassLoader createClassLoader(File librariesDirectory, List<LibraryJson> libraries, File versionJarFile) throws MalformedURLException {
+            URLClassLoader cl = super.createClassLoader(librariesDirectory, libraries, versionJarFile);
+            try {
+                CLS_BEDROCK_RANDOM = cl.loadClass("net.earthcomputer.bedrockified.BedrockRandom");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                CLS_BEDROCK_RANDOM = Random.class;
+            }
+            return cl;
         }
 
         @Override

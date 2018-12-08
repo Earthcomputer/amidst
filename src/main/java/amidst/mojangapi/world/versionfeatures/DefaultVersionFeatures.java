@@ -2,6 +2,7 @@ package amidst.mojangapi.world.versionfeatures;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import amidst.documentation.Immutable;
@@ -50,7 +51,8 @@ public enum DefaultVersionFeatures {
 				INSTANCE.seedForStructure_OceanRuins.getValue(version),
 				INSTANCE.seedForStructure_Shipwreck.getValue(version),
 				INSTANCE.maxDistanceScatteredFeatures_Shipwreck.getValue(version),
-				INSTANCE.buggyStructureCoordinateMath.getValue(version));
+				INSTANCE.buggyStructureCoordinateMath.getValue(version),
+				INSTANCE.mersenneTwister.getValue(version));
 	}
 
 	private final VersionFeature<List<Integer>> enabledLayers;
@@ -65,8 +67,8 @@ public enum DefaultVersionFeatures {
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_WitchHut;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_OceanRuins;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_Shipwreck;
-	private final VersionFeature<Function<Long, MineshaftAlgorithm_Base>> mineshaftAlgorithmFactory;
-	private final VersionFeature<QuadFunction<Long, BiomeDataOracle, List<Biome>, List<Biome>, LocationChecker>> oceanMonumentLocationCheckerFactory;
+	private final VersionFeature<BiFunction<Long, Boolean, MineshaftAlgorithm_Base>> mineshaftAlgorithmFactory;
+	private final VersionFeature<Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker>> oceanMonumentLocationCheckerFactory;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_OceanMonument;
 	private final VersionFeature<List<Biome>> validBiomesForStructure_OceanMonument;
 	private final VersionFeature<List<Biome>> validBiomesForStructure_WoodlandMansion;
@@ -78,6 +80,7 @@ public enum DefaultVersionFeatures {
 	private final VersionFeature<Long> seedForStructure_Shipwreck;
 	private final VersionFeature<Byte> maxDistanceScatteredFeatures_Shipwreck;
 	private final VersionFeature<Boolean> buggyStructureCoordinateMath;
+	private final VersionFeature<Boolean> mersenneTwister;
 
 	private DefaultVersionFeatures() {
 		// @formatter:off
@@ -254,19 +257,19 @@ public enum DefaultVersionFeatures {
 						Biome.frozenOcean,
 						Biome.frozenDeepOcean
 				).construct();
-		this.mineshaftAlgorithmFactory = VersionFeature.<Function<Long, MineshaftAlgorithm_Base>> builder()
+		this.mineshaftAlgorithmFactory = VersionFeature.<BiFunction<Long, Boolean, MineshaftAlgorithm_Base>> builder()
 				.init(
-						seed -> new MineshaftAlgorithm_Original(seed)
+						(seed, mersenneTwister) -> new MineshaftAlgorithm_Original(seed, mersenneTwister)
 				).since(RecognisedVersion._1_4_2,
-						seed -> new MineshaftAlgorithm_ChanceBased(seed, 0.01D)
+						(seed, mersenneTwister) -> new MineshaftAlgorithm_ChanceBased(seed, 0.01D, mersenneTwister)
 				).since(RecognisedVersion._1_7_2,
-						seed -> new MineshaftAlgorithm_ChanceBased(seed, 0.004D)
+						(seed, mersenneTwister) -> new MineshaftAlgorithm_ChanceBased(seed, 0.004D, mersenneTwister)
 				).construct();
-		this.oceanMonumentLocationCheckerFactory = VersionFeature.<QuadFunction<Long, BiomeDataOracle, List<Biome>, List<Biome>, LocationChecker>> builder()
+		this.oceanMonumentLocationCheckerFactory = VersionFeature.<Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker>> builder()
 				.init(
-						(seed, biomeOracle, validCenterBiomes, validBiomes) -> new OceanMonumentLocationChecker_Original(seed, biomeOracle, validCenterBiomes, validBiomes)
+						(seed, biomeOracle, validCenterBiomes, validBiomes, mersenneTwister) -> new OceanMonumentLocationChecker_Original(seed, biomeOracle, validCenterBiomes, validBiomes, mersenneTwister)
 				).since(RecognisedVersion._15w46a,
-						(seed, biomeOracle, validCenterBiomes, validBiomes) -> new OceanMonumentLocationChecker_Fixed(seed, biomeOracle, validCenterBiomes, validBiomes)
+						(seed, biomeOracle, validCenterBiomes, validBiomes, mersenneTwister) -> new OceanMonumentLocationChecker_Fixed(seed, biomeOracle, validCenterBiomes, validBiomes, mersenneTwister)
 				).construct();
 		this.validBiomesAtMiddleOfChunk_OceanMonument = VersionFeature.<Biome> listBuilder()
 				.init(
@@ -348,6 +351,12 @@ public enum DefaultVersionFeatures {
 						true  // Bug MC-131462, again.
 				).since(RecognisedVersion._18w30b,
 						false
+				).construct();
+		this.mersenneTwister = VersionFeature.<Boolean> builder()
+				.init(
+						false
+				).since(RecognisedVersion.BEDROCKIFIED,
+						true
 				).construct();
 		// @formatter:on
 	}

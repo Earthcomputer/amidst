@@ -58,7 +58,8 @@ public class OceanMonumentLocationChecker_Fixed extends AllValidLocationChecker 
 			long seed,
 			BiomeDataOracle biomeDataOracle,
 			List<Biome> validBiomesAtMiddleOfChunk,
-			List<Biome> validBiomesForStructure) {
+			List<Biome> validBiomesForStructure,
+			boolean mersenneTwister) {
 		super(
 				new StructureAlgorithm(
 						seed,
@@ -67,7 +68,8 @@ public class OceanMonumentLocationChecker_Fixed extends AllValidLocationChecker 
 						MAGIC_NUMBER_FOR_SEED_3,
 						MAX_DISTANCE_BETWEEN_SCATTERED_FEATURES,
 						MIN_DISTANCE_BETWEEN_SCATTERED_FEATURES,
-						USE_TWO_VALUES_FOR_UPDATE),
+						USE_TWO_VALUES_FOR_UPDATE,
+						mersenneTwister),
 				new StructureBiomeLocationChecker(biomeDataOracle, STRUCTURE_CENTER_SIZE, validBiomesAtMiddleOfChunk),
 				new StructureBiomeLocationChecker(biomeDataOracle, STRUCTURE_SIZE, validBiomesForStructure));
 	}

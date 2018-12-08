@@ -8,7 +8,7 @@ public class EndCityLocationChecker extends AllValidLocationChecker {
 	private static final byte MIN_DISTANCE_BETWEEN_SCATTERED_FEATURES = 11;
 	private static final boolean USE_TWO_VALUES_FOR_UPDATE = true;
 
-	public EndCityLocationChecker(long seed) {
+	public EndCityLocationChecker(long seed, boolean mersenneTwister) {
 		super(
 				new StructureAlgorithm(
 						seed,
@@ -17,6 +17,7 @@ public class EndCityLocationChecker extends AllValidLocationChecker {
 						MAGIC_NUMBER_FOR_SEED_3,
 						MAX_DISTANCE_BETWEEN_SCATTERED_FEATURES,
 						MIN_DISTANCE_BETWEEN_SCATTERED_FEATURES,
-						USE_TWO_VALUES_FOR_UPDATE));
+						USE_TWO_VALUES_FOR_UPDATE,
+						mersenneTwister));
 	}
 }

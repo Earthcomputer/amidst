@@ -21,8 +21,8 @@ import amidst.documentation.Immutable;
  */
 @Immutable
 public class MineshaftAlgorithm_Original extends MineshaftAlgorithm_Base {
-	public MineshaftAlgorithm_Original(long seed) {
-		super(seed);
+	public MineshaftAlgorithm_Original(long seed, boolean mersenneTwister) {
+		super(seed, mersenneTwister);
 	}
 
 	@Override

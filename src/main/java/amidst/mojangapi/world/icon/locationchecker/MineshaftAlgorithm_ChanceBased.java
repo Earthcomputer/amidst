@@ -11,8 +11,8 @@ import amidst.documentation.Immutable;
 public class MineshaftAlgorithm_ChanceBased extends MineshaftAlgorithm_Base {
 	private final double chancePerChunk;
 
-	public MineshaftAlgorithm_ChanceBased(long seed, double chancePerChunk) {
-		super(seed);
+	public MineshaftAlgorithm_ChanceBased(long seed, double chancePerChunk, boolean mersenneTwister) {
+		super(seed, mersenneTwister);
 		this.chancePerChunk = chancePerChunk;
 	}
 
