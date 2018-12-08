@@ -232,6 +232,7 @@ public class WorldBuilder {
 										(byte) 16, (byte) 8,
 										versionFeatures.getValidBiomesAtMiddleOfChunk_OceanRuins(),
 										versionFeatures.getSeedForStructure_OceanRuins(),
+										versionFeatures.getUseTwoValuesForUpdate_OceanRuins(),
 										buggyStructureCoordinateMath),
 								new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.OCEAN_RUINS),
 								Dimension.OVERWORLD,

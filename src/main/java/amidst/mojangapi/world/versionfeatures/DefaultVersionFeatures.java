@@ -52,6 +52,7 @@ public enum DefaultVersionFeatures {
 				INSTANCE.seedForStructure_JungleTemple.getValue(version),
 				INSTANCE.seedForStructure_WitchHut.getValue(version),
 				INSTANCE.seedForStructure_OceanRuins.getValue(version),
+				INSTANCE.useTwoValuesForUpdate_OceanRuins.getValue(version),
 				INSTANCE.seedForStructure_Shipwreck.getValue(version),
 				INSTANCE.maxDistanceScatteredFeatures_Shipwreck.getValue(version),
 				INSTANCE.buggyStructureCoordinateMath.getValue(version),
@@ -81,8 +82,9 @@ public enum DefaultVersionFeatures {
 	private final VersionFeature<Long> seedForStructure_JungleTemple;
 	private final VersionFeature<Long> seedForStructure_WitchHut;
 	private final VersionFeature<Long> seedForStructure_OceanRuins;
+    private final VersionFeature<Boolean> useTwoValuesForUpdate_OceanRuins;
 	private final VersionFeature<Long> seedForStructure_Shipwreck;
-	private final VersionFeature<Byte> maxDistanceScatteredFeatures_Shipwreck;
+	private final VersionFeature<Byte> maxDistanceScatteredFeatures_Shipwreck;;
 	private final VersionFeature<Boolean> buggyStructureCoordinateMath;
 	private final VersionFeature<Boolean> mersenneTwister;
 
@@ -244,6 +246,12 @@ public enum DefaultVersionFeatures {
 						Biome.frozenOcean,
 						Biome.frozenDeepOcean
 				).construct();
+		this.useTwoValuesForUpdate_OceanRuins = VersionFeature.<Boolean> builder()
+                .init(
+                        false
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        true
+                ).construct();
 		this.validBiomesAtMiddleOfChunk_Shipwreck = VersionFeature.<Biome> listBuilder()
 				.init(
 						// this is for the enable all layers function
@@ -342,18 +350,24 @@ public enum DefaultVersionFeatures {
 						14357617L
 				).since(RecognisedVersion._18w06a,
 						14357618L
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        14357617L
 				).construct();
 		this.seedForStructure_JungleTemple = VersionFeature.<Long> builder()
 				.init(
 						14357617L
 				).since(RecognisedVersion._18w06a,
 						14357619L
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        14357617L
 				).construct();
 		this.seedForStructure_WitchHut = VersionFeature.<Long> builder()
 				.init(
 						14357617L
 				).since(RecognisedVersion._18w06a,
 						14357620L
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        14357617L
 				).construct();
 		this.seedForStructure_OceanRuins = VersionFeature.<Long> builder()
 				.init(

@@ -37,6 +37,7 @@ public class VersionFeatures {
 	private final Long seedForStructure_JungleTemple;
 	private final Long seedForStructure_WitchHut;
 	private final Long seedForStructure_OceanRuins;
+	private final Boolean useTwoValuesForUpdate_OceanRuins;
 	private final Long seedForStructure_Shipwreck;
 	private final Byte maxDistanceScatteredFeatures_Shipwreck;
 	private final Boolean buggyStructureCoordinateMath;
@@ -66,6 +67,7 @@ public class VersionFeatures {
 			Long seedForStructure_JungleTemple,
 			Long seedForStructure_WitchHut,
 			Long seedForStructure_OceanRuins,
+			Boolean useTwoValuesForUpdate_OceanRuins,
 			Long seedForStructure_Shipwreck,
 			Byte maxDistanceScatteredFeatures_Shipwreck,
 			Boolean buggyStructureCoordinateMath,
@@ -93,6 +95,7 @@ public class VersionFeatures {
 		this.seedForStructure_JungleTemple = seedForStructure_JungleTemple;
 		this.seedForStructure_WitchHut = seedForStructure_WitchHut;
 		this.seedForStructure_OceanRuins = seedForStructure_OceanRuins;
+		this.useTwoValuesForUpdate_OceanRuins = useTwoValuesForUpdate_OceanRuins;
 		this.seedForStructure_Shipwreck = seedForStructure_Shipwreck;
 		this.maxDistanceScatteredFeatures_Shipwreck = maxDistanceScatteredFeatures_Shipwreck;
 		this.buggyStructureCoordinateMath = buggyStructureCoordinateMath;
@@ -189,6 +192,10 @@ public class VersionFeatures {
 	
 	public Long getSeedForStructure_OceanRuins() {
 		return seedForStructure_OceanRuins;
+	}
+
+	public Boolean getUseTwoValuesForUpdate_OceanRuins() {
+		return useTwoValuesForUpdate_OceanRuins;
 	}
 	
 	public Long getSeedForStructure_Shipwreck() {
