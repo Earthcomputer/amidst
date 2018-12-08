@@ -10,12 +10,7 @@ import amidst.fragment.layer.LayerIds;
 import amidst.mojangapi.file.Version;
 import amidst.mojangapi.minecraftinterface.RecognisedVersion;
 import amidst.mojangapi.world.biome.Biome;
-import amidst.mojangapi.world.icon.locationchecker.LocationChecker;
-import amidst.mojangapi.world.icon.locationchecker.MineshaftAlgorithm_Base;
-import amidst.mojangapi.world.icon.locationchecker.MineshaftAlgorithm_ChanceBased;
-import amidst.mojangapi.world.icon.locationchecker.MineshaftAlgorithm_Original;
-import amidst.mojangapi.world.icon.locationchecker.OceanMonumentLocationChecker_Fixed;
-import amidst.mojangapi.world.icon.locationchecker.OceanMonumentLocationChecker_Original;
+import amidst.mojangapi.world.icon.locationchecker.*;
 import amidst.mojangapi.world.icon.producer.StrongholdProducer_128Algorithm;
 import amidst.mojangapi.world.icon.producer.StrongholdProducer_Base;
 import amidst.mojangapi.world.icon.producer.StrongholdProducer_Buggy128Algorithm;
@@ -45,6 +40,7 @@ public enum DefaultVersionFeatures {
 				INSTANCE.validBiomesAtMiddleOfChunk_WitchHut.getValue(version),
 				INSTANCE.validBiomesAtMiddleOfChunk_OceanRuins.getValue(version),
 				INSTANCE.validBiomesAtMiddleOfChunk_Shipwreck.getValue(version),
+				INSTANCE.villageStructureAlgorithmFactory.getValue(version),
 				INSTANCE.mineshaftAlgorithmFactory.getValue(version),
 				INSTANCE.oceanMonumentLocationCheckerFactory.getValue(version),
 				INSTANCE.validBiomesAtMiddleOfChunk_OceanMonument.getValue(version),
@@ -80,6 +76,7 @@ public enum DefaultVersionFeatures {
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_WitchHut;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_OceanRuins;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_Shipwreck;
+	private final VersionFeature<QuadFunction<Long, Byte, Byte, Boolean, StructureAlgorithm>> villageStructureAlgorithmFactory;
 	private final VersionFeature<BiFunction<Long, Boolean, MineshaftAlgorithm_Base>> mineshaftAlgorithmFactory;
 	private final VersionFeature<Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker>> oceanMonumentLocationCheckerFactory;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_OceanMonument;
@@ -317,6 +314,30 @@ public enum DefaultVersionFeatures {
                         Biome.lukewarmDeepOcean,
                         Biome.frozenOcean,
                         Biome.frozenDeepOcean
+                ).construct();
+		this.villageStructureAlgorithmFactory = VersionFeature.<QuadFunction<Long, Byte, Byte, Boolean, StructureAlgorithm>> builder()
+                .init(
+                        (seed, maxDistanceScatteredFeatures, minDistanceScatteredFeatures, mersenneTwister) ->
+                                new StructureAlgorithm(
+                                        seed,
+                                        341873128712L,
+                                        132897987541L,
+                                        10387312L,
+                                        maxDistanceScatteredFeatures,
+                                        minDistanceScatteredFeatures,
+                                        false,
+                                        mersenneTwister)
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        (seed, maxDistanceScatteredFeatures, minDistanceScatteredFeatures, mersenneTwister) ->
+                                new BedrockVillageStructureAlgorithm(
+                                        seed,
+                                        341873128712L,
+                                        132897987541L,
+                                        10387312L,
+                                        maxDistanceScatteredFeatures,
+                                        minDistanceScatteredFeatures,
+                                        false,
+                                        mersenneTwister)
                 ).construct();
 		this.mineshaftAlgorithmFactory = VersionFeature.<BiFunction<Long, Boolean, MineshaftAlgorithm_Base>> builder()
 				.init(

@@ -15,7 +15,7 @@ public class StructureAlgorithm implements LocationChecker {
 	private final int distanceBetweenScatteredFeaturesRange;
 	private final boolean useTwoValuesForUpdate;
 	private final boolean buggyStructureCoordinateMath;
-	private final boolean mersenneTwister;
+	protected final boolean mersenneTwister;
 
 	public StructureAlgorithm(
 			long seed,
@@ -70,7 +70,7 @@ public class StructureAlgorithm implements LocationChecker {
 		return x == value1 && y == value2;
 	}
 
-	private int getInitialValue(int coordinate) {
+	protected final int getInitialValue(int coordinate) {
 		return getModified(coordinate) / maxDistanceBetweenScatteredFeatures;
 	}
 
@@ -87,7 +87,7 @@ public class StructureAlgorithm implements LocationChecker {
 		}
 	}
 
-	private long getSeed(int value1, int value2) {
+	protected final long getSeed(int value1, int value2) {
 		// @formatter:off
 		return value1 * magicNumberForSeed1
 		     + value2 * magicNumberForSeed2
@@ -96,7 +96,7 @@ public class StructureAlgorithm implements LocationChecker {
 		// @formatter:on
 	}
 
-	private int updateValue(Random random, int value) {
+	protected final int updateValue(Random random, int value) {
 		int result = value * maxDistanceBetweenScatteredFeatures;
 		if (useTwoValuesForUpdate) {
 			result += (random.nextInt(distanceBetweenScatteredFeaturesRange)

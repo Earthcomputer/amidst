@@ -8,6 +8,7 @@ import amidst.documentation.Immutable;
 import amidst.mojangapi.world.biome.Biome;
 import amidst.mojangapi.world.icon.locationchecker.LocationChecker;
 import amidst.mojangapi.world.icon.locationchecker.MineshaftAlgorithm_Base;
+import amidst.mojangapi.world.icon.locationchecker.StructureAlgorithm;
 import amidst.mojangapi.world.icon.producer.StrongholdProducer_Base;
 import amidst.mojangapi.world.oracle.BiomeDataOracle;
 import amidst.mojangapi.world.oracle.SlimeChunkOracle;
@@ -29,6 +30,7 @@ public class VersionFeatures {
 	private final List<Biome> validBiomesAtMiddleOfChunk_WitchHut;
 	private final List<Biome> validBiomesAtMiddleOfChunk_OceanRuins;
 	private final List<Biome> validBiomesAtMiddleOfChunk_Shipwreck;
+	private final QuadFunction<Long, Byte, Byte, Boolean, StructureAlgorithm> villageStructureAlgorithmFactory;
 	private final BiFunction<Long, Boolean, MineshaftAlgorithm_Base> mineshaftAlgorithmFactory;
 	private final Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker> oceanMonumentLocationCheckerFactory;
 	private final List<Biome> validBiomesAtMiddleOfChunk_OceanMonument;
@@ -64,6 +66,7 @@ public class VersionFeatures {
 			List<Biome> validBiomesAtMiddleOfChunk_WitchHut,
 			List<Biome> validBiomesAtMiddleOfChunk_OceanRuins,
 			List<Biome> validBiomesAtMiddleOfChunk_Shipwreck,
+			QuadFunction<Long, Byte, Byte, Boolean, StructureAlgorithm> villageStructureAlgorithmFactory,
 			BiFunction<Long, Boolean, MineshaftAlgorithm_Base> mineshaftAlgorithmFactory,
 			Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker> oceanMonumentLocationCheckerFactory,
 			List<Biome> validBiomesAtMiddleOfChunk_OceanMonument,
@@ -97,6 +100,7 @@ public class VersionFeatures {
 		this.validBiomesAtMiddleOfChunk_WitchHut = validBiomesAtMiddleOfChunk_WitchHut;
 		this.validBiomesAtMiddleOfChunk_OceanRuins = validBiomesAtMiddleOfChunk_OceanRuins;
 		this.validBiomesAtMiddleOfChunk_Shipwreck = validBiomesAtMiddleOfChunk_Shipwreck;
+		this.villageStructureAlgorithmFactory = villageStructureAlgorithmFactory;
 		this.mineshaftAlgorithmFactory = mineshaftAlgorithmFactory;
 		this.oceanMonumentLocationCheckerFactory = oceanMonumentLocationCheckerFactory;
 		this.validBiomesAtMiddleOfChunk_OceanMonument = validBiomesAtMiddleOfChunk_OceanMonument;
@@ -175,6 +179,10 @@ public class VersionFeatures {
 	
 	public List<Biome> getValidBiomesAtMiddleOfChunk_Shipwreck() {
 		return validBiomesAtMiddleOfChunk_Shipwreck;
+	}
+
+	public QuadFunction<Long, Byte, Byte, Boolean, StructureAlgorithm> getVillageStructureAlgorithmFactory() {
+		return villageStructureAlgorithmFactory;
 	}
 
 	public BiFunction<Long, Boolean, MineshaftAlgorithm_Base> getMineshaftAlgorithmFactory() {
