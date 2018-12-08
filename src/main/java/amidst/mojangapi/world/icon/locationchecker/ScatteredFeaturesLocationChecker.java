@@ -18,14 +18,16 @@ public class ScatteredFeaturesLocationChecker extends AllValidLocationChecker {
 			long seed, BiomeDataOracle biomeDataOracle,
 			List<Biome> validBiomesAtMiddleOfChunk,
 			long magicNumber,
-			boolean buggyStructureCoordinateMath) {
+			boolean buggyStructureCoordinateMath,
+			boolean mersenneTwister) {
 		
 		this(seed, biomeDataOracle,
 			MAX_DISTANCE_BETWEEN_SCATTERED_FEATURES,
 			MIN_DISTANCE_BETWEEN_SCATTERED_FEATURES,
 			validBiomesAtMiddleOfChunk,
 			magicNumber,
-			buggyStructureCoordinateMath);
+			buggyStructureCoordinateMath,
+			mersenneTwister);
 	}
 	
 	public ScatteredFeaturesLocationChecker(
@@ -33,7 +35,8 @@ public class ScatteredFeaturesLocationChecker extends AllValidLocationChecker {
 			byte maxDistanceBetweenFeatures, byte minDistanceBetweenFeatures,
 			List<Biome> validBiomesAtMiddleOfChunk,
 			long magicNumber,
-			boolean buggyStructureCoordinateMath) {
+			boolean buggyStructureCoordinateMath,
+			boolean mersenneTwister) {
 
 		super(
 				new StructureAlgorithm(
@@ -44,7 +47,8 @@ public class ScatteredFeaturesLocationChecker extends AllValidLocationChecker {
 					maxDistanceBetweenFeatures,
 					minDistanceBetweenFeatures,
 					USE_TWO_VALUES_FOR_UPDATE,
-					buggyStructureCoordinateMath),
+					buggyStructureCoordinateMath,
+					mersenneTwister),
 				new BiomeLocationChecker(biomeDataOracle, validBiomesAtMiddleOfChunk));
 	}
 
@@ -54,7 +58,8 @@ public class ScatteredFeaturesLocationChecker extends AllValidLocationChecker {
 			List<Biome> validBiomesAtMiddleOfChunk,
 			long magicNumber,
 			boolean useTwoValuesForUpdate,
-			boolean buggyStructureCoordinateMath) {
+			boolean buggyStructureCoordinateMath,
+			boolean mersenneTwister) {
 		super(
 				new StructureAlgorithm(
 					seed,
@@ -64,7 +69,8 @@ public class ScatteredFeaturesLocationChecker extends AllValidLocationChecker {
 					maxDistanceBetweenFeatures,
 					minDistanceBetweenFeatures,
 					useTwoValuesForUpdate,
-					buggyStructureCoordinateMath),
+					buggyStructureCoordinateMath,
+					mersenneTwister),
 				new BiomeLocationChecker(biomeDataOracle, validBiomesAtMiddleOfChunk));
 	}
 }
