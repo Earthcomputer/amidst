@@ -7,14 +7,10 @@ import java.util.function.Function;
 
 import amidst.documentation.Immutable;
 import amidst.fragment.layer.LayerIds;
-import amidst.mojangapi.file.Version;
 import amidst.mojangapi.minecraftinterface.RecognisedVersion;
 import amidst.mojangapi.world.biome.Biome;
 import amidst.mojangapi.world.icon.locationchecker.*;
-import amidst.mojangapi.world.icon.producer.StrongholdProducer_128Algorithm;
-import amidst.mojangapi.world.icon.producer.StrongholdProducer_Base;
-import amidst.mojangapi.world.icon.producer.StrongholdProducer_Buggy128Algorithm;
-import amidst.mojangapi.world.icon.producer.StrongholdProducer_Original;
+import amidst.mojangapi.world.icon.producer.*;
 import amidst.mojangapi.world.oracle.BiomeDataOracle;
 import amidst.mojangapi.world.oracle.SlimeChunkOracle;
 import amidst.mojangapi.world.oracle.SlimeChunkOracle_Bedrock;
@@ -65,7 +61,7 @@ public enum DefaultVersionFeatures {
 	private final VersionFeature<List<Biome>> validBiomesForStructure_Spawn;
 	private final VersionFeature<Function<Long, SlimeChunkOracle>> slimeChunkOracleFactory;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_Stronghold;
-	private final VersionFeature<TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base>> strongholdProducerFactory;
+	private final VersionFeature<QuadFunction<Long, BiomeDataOracle, List<Biome>, VillageLocationChecker, WorldIconProducer<Void>>> strongholdProducerFactory;
 	private final VersionFeature<Byte> maxDistanceScatteredFeatures_Village;
 	private final VersionFeature<Byte> minDistanceScatteredFeatures_Village;
 	private final VersionFeature<List<Biome>> validBiomesForStructure_Village;
@@ -163,15 +159,17 @@ public enum DefaultVersionFeatures {
 						// this includes all the biomes above, except for the swampland
 						getValidBiomesForStrongholdSinceV13w36a()
 				).construct();
-		this.strongholdProducerFactory = VersionFeature.<TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base>> builder()
+		this.strongholdProducerFactory = VersionFeature.<QuadFunction<Long, BiomeDataOracle, List<Biome>, VillageLocationChecker, WorldIconProducer<Void>>> builder()
 				.init(
-						(seed, biomeOracle, validBiomes) -> new StrongholdProducer_Original(seed, biomeOracle, validBiomes)
+						(seed, biomeOracle, validBiomes, villageLocationChecker) -> new StrongholdProducer_Original(seed, biomeOracle, validBiomes)
 				).since(RecognisedVersion._15w43c,
 						// this should be 15w43a, which is no recognised
-						(seed, biomeOracle, validBiomes) -> new StrongholdProducer_Buggy128Algorithm(seed, biomeOracle, validBiomes)
+						(seed, biomeOracle, validBiomes, villageLocationChecker) -> new StrongholdProducer_Buggy128Algorithm(seed, biomeOracle, validBiomes)
 				).since(RecognisedVersion._1_9_pre2,
 						// this should be 16w06a
-						(seed, biomeOracle, validBiomes) -> new StrongholdProducer_128Algorithm(seed, biomeOracle, validBiomes)
+						(seed, biomeOracle, validBiomes, villageLocationChecker) -> new StrongholdProducer_128Algorithm(seed, biomeOracle, validBiomes)
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        (seed, biomeOracle, validBiomes, villageLocationChecker) -> new StrongholdProducer_Bedrock(seed, villageLocationChecker)
 				).construct();
 		this.maxDistanceScatteredFeatures_Village = VersionFeature.<Byte> builder()
                 .init(

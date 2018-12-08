@@ -85,7 +85,7 @@ public abstract class StrongholdProducer_Base extends CachedWorldIconProducer {
 		return CoordinatesInWorld.from(xInWorld, yInWorld);
 	}
 
-	private WorldIcon createWorldIcon(CoordinatesInWorld coordinates) {
+	public static WorldIcon createWorldIcon(CoordinatesInWorld coordinates) {
 		return new WorldIcon(
 				coordinates,
 				DefaultWorldIconTypes.STRONGHOLD.getLabel(),

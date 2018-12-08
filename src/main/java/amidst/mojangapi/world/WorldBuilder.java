@@ -27,7 +27,6 @@ import amidst.mojangapi.world.oracle.BiomeDataOracle;
 import amidst.mojangapi.world.oracle.EndIslandOracle;
 import amidst.mojangapi.world.oracle.HeuristicWorldSpawnOracle;
 import amidst.mojangapi.world.oracle.ImmutableWorldSpawnOracle;
-import amidst.mojangapi.world.oracle.SlimeChunkOracle;
 import amidst.mojangapi.world.oracle.WorldSpawnOracle;
 import amidst.mojangapi.world.player.MovablePlayerList;
 import amidst.mojangapi.world.player.PlayerInformation;
@@ -112,6 +111,15 @@ public class WorldBuilder {
 		long seed = worldSeed.getLong();
 		boolean buggyStructureCoordinateMath = versionFeatures.getBuggyStructureCoordinateMath();
 		minecraftInterface.createWorld(seed, worldType, generatorOptions);
+		VillageLocationChecker villageLocationChecker = new VillageLocationChecker(
+				biomeDataOracle,
+				versionFeatures.getVillageStructureAlgorithmFactory().apply(
+						seed,
+						versionFeatures.getMaxDistanceScatteredFeatures_Village(),
+						versionFeatures.getMinDistanceScatteredFeatures_Village(),
+						versionFeatures.getMersenneTwister()),
+				versionFeatures.getValidBiomesForStructure_Village(),
+				versionFeatures.getDoComplexVillageCheck());
 		return new World(
 				onDisposeWorld,
 				worldSeed,
@@ -127,20 +135,13 @@ public class WorldBuilder {
 				versionFeatures.getStrongholdProducerFactory().apply(
 						seed,
 						biomeDataOracle,
-						versionFeatures.getValidBiomesAtMiddleOfChunk_Stronghold()),
+						versionFeatures.getValidBiomesAtMiddleOfChunk_Stronghold(),
+						villageLocationChecker),
 				new PlayerProducer(movablePlayerList),
 				new StructureProducer<>(
 						Resolution.CHUNK,
 						4,
-						new VillageLocationChecker(
-								biomeDataOracle,
-								versionFeatures.getVillageStructureAlgorithmFactory().apply(
-										seed,
-										versionFeatures.getMaxDistanceScatteredFeatures_Village(),
-										versionFeatures.getMinDistanceScatteredFeatures_Village(),
-										versionFeatures.getMersenneTwister()),
-								versionFeatures.getValidBiomesForStructure_Village(),
-								versionFeatures.getDoComplexVillageCheck()),
+						villageLocationChecker,
 						new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.VILLAGE),
 						Dimension.OVERWORLD,
 						false),

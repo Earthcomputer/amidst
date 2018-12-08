@@ -167,9 +167,9 @@ public class LayerBuilder {
 				new ImageDrawer(    declarations.get(LayerIds.SLIME),           Resolution.CHUNK,   accelerationCounter),
 				new GridDrawer(     declarations.get(LayerIds.GRID),            zoom),
 				new WorldIconDrawer(declarations.get(LayerIds.SPAWN),           zoom, worldIconSelection),
-				new WorldIconDrawer(declarations.get(LayerIds.STRONGHOLD),      zoom, worldIconSelection),
 				new WorldIconDrawer(declarations.get(LayerIds.PLAYER),          zoom, worldIconSelection),
 				new WorldIconDrawer(declarations.get(LayerIds.VILLAGE),         zoom, worldIconSelection),
+				new WorldIconDrawer(declarations.get(LayerIds.STRONGHOLD),      zoom, worldIconSelection), // stronghold after village so it's rendered on top
 				new WorldIconDrawer(declarations.get(LayerIds.TEMPLE),          zoom, worldIconSelection),
 				new WorldIconDrawer(declarations.get(LayerIds.MINESHAFT),       zoom, worldIconSelection),
 				new WorldIconDrawer(declarations.get(LayerIds.OCEAN_MONUMENT),  zoom, worldIconSelection),

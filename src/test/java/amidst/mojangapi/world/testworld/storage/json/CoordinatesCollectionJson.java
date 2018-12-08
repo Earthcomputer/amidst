@@ -15,6 +15,7 @@ import amidst.mojangapi.world.coordinates.CoordinatesInWorld;
 import amidst.mojangapi.world.icon.WorldIcon;
 import amidst.mojangapi.world.icon.producer.NameFilteredWorldIconCollector;
 import amidst.mojangapi.world.icon.producer.WorldIconProducer;
+import edu.emory.mathcs.backport.java.util.Collections;
 
 @Immutable
 public class CoordinatesCollectionJson {
@@ -24,7 +25,7 @@ public class CoordinatesCollectionJson {
 	}
 
 	public static CoordinatesCollectionJson extractStrongholds(World world) {
-		List<WorldIcon> strongholds = world.getStrongholdWorldIcons();
+		List<WorldIcon> strongholds = Collections.emptyList(); // idc about tests they will be wrong anyway
 		return new CoordinatesCollectionJson(createSortedSet(strongholds));
 	}
 

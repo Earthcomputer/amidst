@@ -158,11 +158,6 @@ public class ViewerFacade {
 	}
 
 	@CalledOnlyBy(AmidstThread.EDT)
-	public List<WorldIcon> getStrongholdWorldIcons() {
-		return world.getStrongholdWorldIcons();
-	}
-
-	@CalledOnlyBy(AmidstThread.EDT)
 	public List<WorldIcon> getPlayerWorldIcons() {
 		return world.getPlayerWorldIcons();
 	}

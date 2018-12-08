@@ -138,11 +138,7 @@ public class Actions {
 	public void goToStronghold() {
 		ViewerFacade viewerFacade = viewerFacadeSupplier.get();
 		if (viewerFacade != null) {
-			WorldIcon stronghold = dialogs
-					.askForOptions("Go to", "Select Stronghold:", viewerFacade.getStrongholdWorldIcons());
-			if (stronghold != null) {
-				viewerFacade.centerOn(stronghold);
-			}
+			dialogs.displayInfo("Amidst Bedrockified", "This feature has had to be disabled in order to support Bedrock Edition.");
 		}
 	}
 

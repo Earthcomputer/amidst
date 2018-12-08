@@ -30,7 +30,7 @@ public class World {
 	private final EndIslandOracle endIslandOracle;
 	private final SlimeChunkOracle slimeChunkOracle;
 	private final CachedWorldIconProducer spawnProducer;
-	private final CachedWorldIconProducer strongholdProducer;
+	private final WorldIconProducer<Void> strongholdProducer;
 	private final CachedWorldIconProducer playerProducer;
 	private final WorldIconProducer<Void> villageProducer;
 	private final WorldIconProducer<Void> templeProducer;
@@ -53,7 +53,7 @@ public class World {
 			EndIslandOracle endIslandOracle,
 			SlimeChunkOracle slimeChunkOracle,
 			CachedWorldIconProducer spawnProducer,
-			CachedWorldIconProducer strongholdProducer,
+			WorldIconProducer<Void> strongholdProducer,
 			CachedWorldIconProducer playerProducer,
 			WorldIconProducer<Void> villageProducer,
 			WorldIconProducer<Void> templeProducer,
@@ -168,10 +168,6 @@ public class World {
 
 	public WorldIcon getSpawnWorldIcon() {
 		return spawnProducer.getFirstWorldIcon();
-	}
-
-	public List<WorldIcon> getStrongholdWorldIcons() {
-		return strongholdProducer.getWorldIcons();
 	}
 
 	public List<WorldIcon> getPlayerWorldIcons() {

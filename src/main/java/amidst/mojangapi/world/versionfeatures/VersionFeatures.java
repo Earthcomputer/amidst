@@ -9,7 +9,9 @@ import amidst.mojangapi.world.biome.Biome;
 import amidst.mojangapi.world.icon.locationchecker.LocationChecker;
 import amidst.mojangapi.world.icon.locationchecker.MineshaftAlgorithm_Base;
 import amidst.mojangapi.world.icon.locationchecker.StructureAlgorithm;
+import amidst.mojangapi.world.icon.locationchecker.VillageLocationChecker;
 import amidst.mojangapi.world.icon.producer.StrongholdProducer_Base;
+import amidst.mojangapi.world.icon.producer.WorldIconProducer;
 import amidst.mojangapi.world.oracle.BiomeDataOracle;
 import amidst.mojangapi.world.oracle.SlimeChunkOracle;
 
@@ -19,7 +21,7 @@ public class VersionFeatures {
 	private final List<Biome> validBiomesForStructure_Spawn;
     private final Function<Long, SlimeChunkOracle> slimeChunkOracleFactory;
 	private final List<Biome> validBiomesAtMiddleOfChunk_Stronghold;
-	private final TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base> strongholdProducerFactory;
+	private final QuadFunction<Long, BiomeDataOracle, List<Biome>, VillageLocationChecker, WorldIconProducer<Void>> strongholdProducerFactory;
 	private final Byte maxDistanceScatteredFeatures_Village;
 	private final Byte minDistanceScatteredFeatures_Village;
 	private final List<Biome> validBiomesForStructure_Village;
@@ -55,7 +57,7 @@ public class VersionFeatures {
 			List<Biome> validBiomesForStructure_Spawn,
 			Function<Long, SlimeChunkOracle> slimeChunkOracleFactory,
 			List<Biome> validBiomesAtMiddleOfChunk_Stronghold,
-			TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base> strongholdProducerFactory,
+			QuadFunction<Long, BiomeDataOracle, List<Biome>, VillageLocationChecker, WorldIconProducer<Void>> strongholdProducerFactory,
 			Byte maxDistanceScatteredFeatures_Village,
 			Byte minDistanceScatteredFeatures_Village,
 			List<Biome> validBiomesForStructure_Village,
@@ -137,7 +139,7 @@ public class VersionFeatures {
 		return validBiomesAtMiddleOfChunk_Stronghold;
 	}
 
-	public TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base> getStrongholdProducerFactory() {
+	public QuadFunction<Long, BiomeDataOracle, List<Biome>, VillageLocationChecker, WorldIconProducer<Void>> getStrongholdProducerFactory() {
 		return strongholdProducerFactory;
 	}
 
