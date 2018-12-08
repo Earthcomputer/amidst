@@ -170,6 +170,11 @@ public enum DefaultVersionFeatures {
 						Biome.savanna
 				).sinceExtend(RecognisedVersion._16w20a,
 						Biome.taiga
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        Biome.plains,
+                        Biome.desert,
+                        Biome.savanna,
+                        Biome.icePlains
 				).construct();
 		this.doComplexVillageCheck = VersionFeature.<Boolean> builder()
 				.init(
@@ -210,6 +215,8 @@ public enum DefaultVersionFeatures {
 				).since(RecognisedVersion._12w21a
 				).sinceExtend(RecognisedVersion._1_4_2,
 						Biome.swampland
+                ).sinceExtend(RecognisedVersion.BEDROCKIFIED,
+                        Biome.swamplandM
 				).construct();
 		this.validBiomesAtMiddleOfChunk_OceanRuins = VersionFeature.<Biome> listBuilder()
 				.init(
@@ -266,7 +273,20 @@ public enum DefaultVersionFeatures {
 						Biome.lukewarmDeepOcean,
 						Biome.frozenOcean,
 						Biome.frozenDeepOcean
-				).construct();
+				).since(RecognisedVersion.BEDROCKIFIED,
+                        Biome.beach,
+                        Biome.coldBeach,
+                        Biome.mushroomIslandShore,
+                        Biome.ocean,
+                        Biome.deepOcean,
+                        Biome.coldOcean,
+                        Biome.coldDeepOcean,
+                        Biome.warmOcean,
+                        Biome.lukewarmOcean,
+                        Biome.lukewarmDeepOcean,
+                        Biome.frozenOcean,
+                        Biome.frozenDeepOcean
+                ).construct();
 		this.mineshaftAlgorithmFactory = VersionFeature.<BiFunction<Long, Boolean, MineshaftAlgorithm_Base>> builder()
 				.init(
 						(seed, mersenneTwister) -> new MineshaftAlgorithm_Original(seed, mersenneTwister)
