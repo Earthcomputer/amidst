@@ -122,7 +122,7 @@ public class WorldBuilder {
 				versionFeatures,
 				biomeDataOracle,
 				EndIslandOracle.from(seed),
-				new SlimeChunkOracle(seed),
+				versionFeatures.getSlimeChunkOracleFactory().apply(seed),
 				new SpawnProducer(worldSpawnOracle),
 				versionFeatures.getStrongholdProducerFactory().apply(
 						seed,

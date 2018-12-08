@@ -10,11 +10,13 @@ import amidst.mojangapi.world.icon.locationchecker.LocationChecker;
 import amidst.mojangapi.world.icon.locationchecker.MineshaftAlgorithm_Base;
 import amidst.mojangapi.world.icon.producer.StrongholdProducer_Base;
 import amidst.mojangapi.world.oracle.BiomeDataOracle;
+import amidst.mojangapi.world.oracle.SlimeChunkOracle;
 
 @Immutable
 public class VersionFeatures {
 	private final List<Integer> enabledLayers;
 	private final List<Biome> validBiomesForStructure_Spawn;
+    private final Function<Long, SlimeChunkOracle> slimeChunkOracleFactory;
 	private final List<Biome> validBiomesAtMiddleOfChunk_Stronghold;
 	private final TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base> strongholdProducerFactory;
 	private final List<Biome> validBiomesForStructure_Village;
@@ -43,6 +45,7 @@ public class VersionFeatures {
 	public VersionFeatures(
 			List<Integer> enabledLayers,
 			List<Biome> validBiomesForStructure_Spawn,
+			Function<Long, SlimeChunkOracle> slimeChunkOracleFactory,
 			List<Biome> validBiomesAtMiddleOfChunk_Stronghold,
 			TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base> strongholdProducerFactory,
 			List<Biome> validBiomesForStructure_Village,
@@ -69,6 +72,7 @@ public class VersionFeatures {
 			Boolean mersenneTwister) {
 		this.enabledLayers = enabledLayers;
 		this.validBiomesForStructure_Spawn = validBiomesForStructure_Spawn;
+		this.slimeChunkOracleFactory = slimeChunkOracleFactory;
 		this.validBiomesAtMiddleOfChunk_Stronghold = validBiomesAtMiddleOfChunk_Stronghold;
 		this.strongholdProducerFactory = strongholdProducerFactory;
 		this.validBiomesForStructure_Village = validBiomesForStructure_Village;
@@ -102,6 +106,10 @@ public class VersionFeatures {
 	public List<Biome> getValidBiomesForStructure_Spawn() {
 		return validBiomesForStructure_Spawn;
 	}
+
+    public Function<Long, SlimeChunkOracle> getSlimeChunkOracleFactory() {
+        return slimeChunkOracleFactory;
+    }
 
 	public List<Biome> getValidBiomesAtMiddleOfChunk_Stronghold() {
 		return validBiomesAtMiddleOfChunk_Stronghold;

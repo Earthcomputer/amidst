@@ -20,6 +20,8 @@ import amidst.mojangapi.world.icon.producer.StrongholdProducer_Base;
 import amidst.mojangapi.world.icon.producer.StrongholdProducer_Buggy128Algorithm;
 import amidst.mojangapi.world.icon.producer.StrongholdProducer_Original;
 import amidst.mojangapi.world.oracle.BiomeDataOracle;
+import amidst.mojangapi.world.oracle.SlimeChunkOracle;
+import amidst.mojangapi.world.oracle.SlimeChunkOracle_Bedrock;
 
 @Immutable
 public enum DefaultVersionFeatures {
@@ -29,6 +31,7 @@ public enum DefaultVersionFeatures {
 		return new VersionFeatures(
 				INSTANCE.enabledLayers.getValue(version),
 				INSTANCE.validBiomesForStructure_Spawn.getValue(version),
+				INSTANCE.slimeChunkOracleFactory.getValue(version),
 				INSTANCE.validBiomesAtMiddleOfChunk_Stronghold.getValue(version),
 				INSTANCE.strongholdProducerFactory.getValue(version),
 				INSTANCE.validBiomesForStructure_Village.getValue(version),
@@ -57,6 +60,7 @@ public enum DefaultVersionFeatures {
 
 	private final VersionFeature<List<Integer>> enabledLayers;
 	private final VersionFeature<List<Biome>> validBiomesForStructure_Spawn;
+	private final VersionFeature<Function<Long, SlimeChunkOracle>> slimeChunkOracleFactory;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_Stronghold;
 	private final VersionFeature<TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base>> strongholdProducerFactory;
 	private final VersionFeature<List<Biome>> validBiomesForStructure_Village;
@@ -119,6 +123,12 @@ public enum DefaultVersionFeatures {
 						Biome.jungle,
 						Biome.jungleHills
 				).construct();
+		this.slimeChunkOracleFactory = VersionFeature.<Function<Long, SlimeChunkOracle>> builder()
+                .init(
+                        seed -> new SlimeChunkOracle(seed)
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        seed -> new SlimeChunkOracle_Bedrock(seed)
+                ).construct();
 		this.validBiomesAtMiddleOfChunk_Stronghold = VersionFeature.<Biome> listBuilder()
 				.init(
 						// this is for the enable all layers function
