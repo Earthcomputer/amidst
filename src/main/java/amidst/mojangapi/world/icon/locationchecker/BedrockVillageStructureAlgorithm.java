@@ -28,9 +28,15 @@ public class BedrockVillageStructureAlgorithm extends StructureAlgorithm {
 
     @Override
     public boolean isValidLocation(int x, int y) {
+        int movedX = x;
+        int movedY = y;
+        if (x < 0)
+            movedX -= maxDistanceBetweenScatteredFeatures - 1;
+        if (y < 0)
+            movedY -= maxDistanceBetweenScatteredFeatures - 1;
         int value1 = getInitialValue(x);
         int value2 = getInitialValue(y);
-        Random random = mersenneTwister ? MinecraftInterface.createBedrockRandom(getSeed(x, y)) : new Random(getSeed(x, y));
+        Random random = mersenneTwister ? MinecraftInterface.createBedrockRandom(getSeed(movedX, movedY)) : new Random(getSeed(movedX, movedY));
         value1 = updateValue(random, value1);
         value2 = updateValue(random, value2);
         return x == value1 && y == value2;
