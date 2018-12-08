@@ -135,6 +135,8 @@ public class WorldBuilder {
 						new VillageLocationChecker(
 								seed,
 								biomeDataOracle,
+								versionFeatures.getMaxDistanceScatteredFeatures_Village(),
+								versionFeatures.getMinDistanceScatteredFeatures_Village(),
 								versionFeatures.getValidBiomesForStructure_Village(),
 								versionFeatures.getDoComplexVillageCheck(),
 								versionFeatures.getMersenneTwister()),
@@ -229,7 +231,8 @@ public class WorldBuilder {
 								new ScatteredFeaturesLocationChecker(
 										seed,
 										biomeDataOracle,
-										(byte) 16, (byte) 8,
+										versionFeatures.getMaxDistanceScatteredFeature_OceanRuins(),
+										versionFeatures.getMinDistanceScatteredFeature_OceanRuins(),
 										versionFeatures.getValidBiomesAtMiddleOfChunk_OceanRuins(),
 										versionFeatures.getSeedForStructure_OceanRuins(),
 										versionFeatures.getUseTwoValuesForUpdate_OceanRuins(),
@@ -244,7 +247,7 @@ public class WorldBuilder {
 										seed,
 										biomeDataOracle,
 										versionFeatures.getMaxDistanceScatteredFeatures_Shipwreck(),
-										(byte) 8,
+										versionFeatures.getMinDistanceScatteredFeatures_Shipwreck(),
 										versionFeatures.getValidBiomesAtMiddleOfChunk_Shipwreck(),
 										versionFeatures.getSeedForStructure_Shipwreck(),
 										buggyStructureCoordinateMath),

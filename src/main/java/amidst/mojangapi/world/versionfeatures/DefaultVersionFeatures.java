@@ -7,6 +7,7 @@ import java.util.function.Function;
 
 import amidst.documentation.Immutable;
 import amidst.fragment.layer.LayerIds;
+import amidst.mojangapi.file.Version;
 import amidst.mojangapi.minecraftinterface.RecognisedVersion;
 import amidst.mojangapi.world.biome.Biome;
 import amidst.mojangapi.world.icon.locationchecker.LocationChecker;
@@ -34,6 +35,8 @@ public enum DefaultVersionFeatures {
 				INSTANCE.slimeChunkOracleFactory.getValue(version),
 				INSTANCE.validBiomesAtMiddleOfChunk_Stronghold.getValue(version),
 				INSTANCE.strongholdProducerFactory.getValue(version),
+				INSTANCE.maxDistanceScatteredFeatures_Village.getValue(version),
+				INSTANCE.minDistanceScatteredFeatures_Village.getValue(version),
 				INSTANCE.validBiomesForStructure_Village.getValue(version),
 				INSTANCE.doComplexVillageCheck.getValue(version),
 				INSTANCE.validBiomesAtMiddleOfChunk_DesertTemple.getValue(version),
@@ -52,9 +55,12 @@ public enum DefaultVersionFeatures {
 				INSTANCE.seedForStructure_JungleTemple.getValue(version),
 				INSTANCE.seedForStructure_WitchHut.getValue(version),
 				INSTANCE.seedForStructure_OceanRuins.getValue(version),
+				INSTANCE.maxDistanceScatteredFeatures_OceanRuins.getValue(version),
+				INSTANCE.minDistanceScatteredFeatures_OceanRuins.getValue(version),
 				INSTANCE.useTwoValuesForUpdate_OceanRuins.getValue(version),
 				INSTANCE.seedForStructure_Shipwreck.getValue(version),
 				INSTANCE.maxDistanceScatteredFeatures_Shipwreck.getValue(version),
+				INSTANCE.minDistanceScatteredFeatures_Shipwreck.getValue(version),
 				INSTANCE.buggyStructureCoordinateMath.getValue(version),
 				INSTANCE.mersenneTwister.getValue(version));
 	}
@@ -64,6 +70,8 @@ public enum DefaultVersionFeatures {
 	private final VersionFeature<Function<Long, SlimeChunkOracle>> slimeChunkOracleFactory;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_Stronghold;
 	private final VersionFeature<TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base>> strongholdProducerFactory;
+	private final VersionFeature<Byte> maxDistanceScatteredFeatures_Village;
+	private final VersionFeature<Byte> minDistanceScatteredFeatures_Village;
 	private final VersionFeature<List<Biome>> validBiomesForStructure_Village;
 	private final VersionFeature<Boolean> doComplexVillageCheck;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_DesertTemple;
@@ -82,9 +90,12 @@ public enum DefaultVersionFeatures {
 	private final VersionFeature<Long> seedForStructure_JungleTemple;
 	private final VersionFeature<Long> seedForStructure_WitchHut;
 	private final VersionFeature<Long> seedForStructure_OceanRuins;
+	private final VersionFeature<Byte> maxDistanceScatteredFeatures_OceanRuins;
+	private final VersionFeature<Byte> minDistanceScatteredFeatures_OceanRuins;
     private final VersionFeature<Boolean> useTwoValuesForUpdate_OceanRuins;
 	private final VersionFeature<Long> seedForStructure_Shipwreck;
-	private final VersionFeature<Byte> maxDistanceScatteredFeatures_Shipwreck;;
+	private final VersionFeature<Byte> maxDistanceScatteredFeatures_Shipwreck;
+	private final VersionFeature<Byte> minDistanceScatteredFeatures_Shipwreck;
 	private final VersionFeature<Boolean> buggyStructureCoordinateMath;
 	private final VersionFeature<Boolean> mersenneTwister;
 
@@ -165,6 +176,18 @@ public enum DefaultVersionFeatures {
 						// this should be 16w06a
 						(seed, biomeOracle, validBiomes) -> new StrongholdProducer_128Algorithm(seed, biomeOracle, validBiomes)
 				).construct();
+		this.maxDistanceScatteredFeatures_Village = VersionFeature.<Byte> builder()
+                .init(
+                        (byte) 32
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        (byte) 40
+                ).construct();
+		this.minDistanceScatteredFeatures_Village = VersionFeature.<Byte> builder()
+                .init(
+                        (byte) 8
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        (byte) 12
+                ).construct();
 		this.validBiomesForStructure_Village = VersionFeature.<Biome> listBuilder()
 				.init(
 						Biome.plains,
@@ -373,6 +396,18 @@ public enum DefaultVersionFeatures {
 				.init(
 						14357621L
 				).construct();
+		this.maxDistanceScatteredFeatures_OceanRuins = VersionFeature.<Byte> builder()
+                .init(
+                        (byte) 16
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        (byte) 12
+                ).construct();
+		this.minDistanceScatteredFeatures_OceanRuins = VersionFeature.<Byte> builder()
+                .init(
+                        (byte) 8
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        (byte) 7
+                ).construct();
 		this.seedForStructure_Shipwreck = VersionFeature.<Long> builder()
 				.init(
 						165745295L
@@ -382,7 +417,15 @@ public enum DefaultVersionFeatures {
 					(byte) 15
 				).since(RecognisedVersion._1_13_pre7,
 					(byte) 16
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                    (byte) 10
 				).construct();
+		this.minDistanceScatteredFeatures_Shipwreck = VersionFeature.<Byte> builder()
+                .init(
+                        (byte) 8
+                ).since(RecognisedVersion.BEDROCKIFIED,
+                        (byte) 5
+                ).construct();
 				
 		this.buggyStructureCoordinateMath = VersionFeature.<Boolean> builder()
 				.init(

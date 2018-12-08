@@ -19,6 +19,8 @@ public class VersionFeatures {
     private final Function<Long, SlimeChunkOracle> slimeChunkOracleFactory;
 	private final List<Biome> validBiomesAtMiddleOfChunk_Stronghold;
 	private final TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base> strongholdProducerFactory;
+	private final Byte maxDistanceScatteredFeatures_Village;
+	private final Byte minDistanceScatteredFeatures_Village;
 	private final List<Biome> validBiomesForStructure_Village;
 	private final Boolean doComplexVillageCheck;
 	private final List<Biome> validBiomesAtMiddleOfChunk_DesertTemple;
@@ -37,9 +39,12 @@ public class VersionFeatures {
 	private final Long seedForStructure_JungleTemple;
 	private final Long seedForStructure_WitchHut;
 	private final Long seedForStructure_OceanRuins;
+	private final Byte maxDistanceScatteredFeature_OceanRuins;
+	private final Byte minDistanceScatteredFeature_OceanRuins;
 	private final Boolean useTwoValuesForUpdate_OceanRuins;
 	private final Long seedForStructure_Shipwreck;
 	private final Byte maxDistanceScatteredFeatures_Shipwreck;
+	private final Byte minDistanceScatteredFeatures_Shipwreck;
 	private final Boolean buggyStructureCoordinateMath;
 	private final Boolean mersenneTwister;
 
@@ -49,6 +54,8 @@ public class VersionFeatures {
 			Function<Long, SlimeChunkOracle> slimeChunkOracleFactory,
 			List<Biome> validBiomesAtMiddleOfChunk_Stronghold,
 			TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base> strongholdProducerFactory,
+			Byte maxDistanceScatteredFeatures_Village,
+			Byte minDistanceScatteredFeatures_Village,
 			List<Biome> validBiomesForStructure_Village,
 			Boolean doComplexVillageCheck,
 			List<Biome> validBiomesAtMiddleOfChunk_DesertTemple,
@@ -67,9 +74,12 @@ public class VersionFeatures {
 			Long seedForStructure_JungleTemple,
 			Long seedForStructure_WitchHut,
 			Long seedForStructure_OceanRuins,
+			Byte maxDistanceScatteredFeature_OceanRuins,
+			Byte minDistanceScatteredFeatures_OceanRuins,
 			Boolean useTwoValuesForUpdate_OceanRuins,
 			Long seedForStructure_Shipwreck,
 			Byte maxDistanceScatteredFeatures_Shipwreck,
+			Byte minDistanceScatteredFeatures_Shipwreck,
 			Boolean buggyStructureCoordinateMath,
 			Boolean mersenneTwister) {
 		this.enabledLayers = enabledLayers;
@@ -77,6 +87,8 @@ public class VersionFeatures {
 		this.slimeChunkOracleFactory = slimeChunkOracleFactory;
 		this.validBiomesAtMiddleOfChunk_Stronghold = validBiomesAtMiddleOfChunk_Stronghold;
 		this.strongholdProducerFactory = strongholdProducerFactory;
+		this.maxDistanceScatteredFeatures_Village = maxDistanceScatteredFeatures_Village;
+		this.minDistanceScatteredFeatures_Village = minDistanceScatteredFeatures_Village;
 		this.validBiomesForStructure_Village = validBiomesForStructure_Village;
 		this.doComplexVillageCheck = doComplexVillageCheck;
 		this.validBiomesAtMiddleOfChunk_DesertTemple = validBiomesAtMiddleOfChunk_DesertTemple;
@@ -95,9 +107,12 @@ public class VersionFeatures {
 		this.seedForStructure_JungleTemple = seedForStructure_JungleTemple;
 		this.seedForStructure_WitchHut = seedForStructure_WitchHut;
 		this.seedForStructure_OceanRuins = seedForStructure_OceanRuins;
+		this.maxDistanceScatteredFeature_OceanRuins = maxDistanceScatteredFeature_OceanRuins;
+		this.minDistanceScatteredFeature_OceanRuins = minDistanceScatteredFeatures_OceanRuins;
 		this.useTwoValuesForUpdate_OceanRuins = useTwoValuesForUpdate_OceanRuins;
 		this.seedForStructure_Shipwreck = seedForStructure_Shipwreck;
 		this.maxDistanceScatteredFeatures_Shipwreck = maxDistanceScatteredFeatures_Shipwreck;
+		this.minDistanceScatteredFeatures_Shipwreck = minDistanceScatteredFeatures_Shipwreck;
 		this.buggyStructureCoordinateMath = buggyStructureCoordinateMath;
 		this.mersenneTwister = mersenneTwister;
 	}
@@ -120,6 +135,14 @@ public class VersionFeatures {
 
 	public TriFunction<Long, BiomeDataOracle, List<Biome>, StrongholdProducer_Base> getStrongholdProducerFactory() {
 		return strongholdProducerFactory;
+	}
+
+	public Byte getMaxDistanceScatteredFeatures_Village() {
+		return maxDistanceScatteredFeatures_Village;
+	}
+
+	public Byte getMinDistanceScatteredFeatures_Village() {
+		return minDistanceScatteredFeatures_Village;
 	}
 
 	public List<Biome> getValidBiomesForStructure_Village() {
@@ -194,6 +217,14 @@ public class VersionFeatures {
 		return seedForStructure_OceanRuins;
 	}
 
+	public Byte getMaxDistanceScatteredFeature_OceanRuins() {
+		return maxDistanceScatteredFeature_OceanRuins;
+	}
+
+	public Byte getMinDistanceScatteredFeature_OceanRuins() {
+		return minDistanceScatteredFeature_OceanRuins;
+	}
+
 	public Boolean getUseTwoValuesForUpdate_OceanRuins() {
 		return useTwoValuesForUpdate_OceanRuins;
 	}
@@ -204,6 +235,10 @@ public class VersionFeatures {
 	
 	public Byte getMaxDistanceScatteredFeatures_Shipwreck() {
 		return maxDistanceScatteredFeatures_Shipwreck;
+	}
+
+	public Byte getMinDistanceScatteredFeatures_Shipwreck() {
+		return minDistanceScatteredFeatures_Shipwreck;
 	}
 
 	public Boolean getBuggyStructureCoordinateMath() {
