@@ -11,11 +11,7 @@ import amidst.mojangapi.minecraftinterface.MinecraftInterface;
 import amidst.mojangapi.minecraftinterface.MinecraftInterfaceException;
 import amidst.mojangapi.minecraftinterface.RecognisedVersion;
 import amidst.mojangapi.world.coordinates.Resolution;
-import amidst.mojangapi.world.icon.locationchecker.EndCityLocationChecker;
-import amidst.mojangapi.world.icon.locationchecker.NetherFortressAlgorithm;
-import amidst.mojangapi.world.icon.locationchecker.ScatteredFeaturesLocationChecker;
-import amidst.mojangapi.world.icon.locationchecker.VillageLocationChecker;
-import amidst.mojangapi.world.icon.locationchecker.WoodlandMansionLocationChecker;
+import amidst.mojangapi.world.icon.locationchecker.*;
 import amidst.mojangapi.world.icon.producer.MultiProducer;
 import amidst.mojangapi.world.icon.producer.PlayerProducer;
 import amidst.mojangapi.world.icon.producer.SpawnProducer;
@@ -25,7 +21,6 @@ import amidst.mojangapi.world.icon.type.EndCityWorldIconTypeProvider;
 import amidst.mojangapi.world.icon.type.ImmutableWorldIconTypeProvider;
 import amidst.mojangapi.world.oracle.BiomeDataOracle;
 import amidst.mojangapi.world.oracle.EndIslandOracle;
-import amidst.mojangapi.world.oracle.HeuristicWorldSpawnOracle;
 import amidst.mojangapi.world.oracle.ImmutableWorldSpawnOracle;
 import amidst.mojangapi.world.oracle.WorldSpawnOracle;
 import amidst.mojangapi.world.player.MovablePlayerList;
@@ -120,6 +115,7 @@ public class WorldBuilder {
 						versionFeatures.getMersenneTwister()),
 				versionFeatures.getValidBiomesForStructure_Village(),
 				versionFeatures.getDoComplexVillageCheck());
+		LocationChecker monumentLocationChecker;
 		return new World(
 				onDisposeWorld,
 				worldSeed,
@@ -209,7 +205,7 @@ public class WorldBuilder {
 				new StructureProducer<>(
 						Resolution.CHUNK,
 						8,
-						versionFeatures.getOceanMonumentLocationCheckerFactory().apply(
+						monumentLocationChecker = versionFeatures.getOceanMonumentLocationCheckerFactory().apply(
 								seed,
 								biomeDataOracle,
 								versionFeatures.getValidBiomesAtMiddleOfChunk_OceanMonument(),
@@ -249,13 +245,16 @@ public class WorldBuilder {
 						new StructureProducer<>(
 								Resolution.CHUNK,
 								8,
-								new ScatteredFeaturesLocationChecker(
+								new ShipwreckLocationChecker(
 										seed,
 										biomeDataOracle,
 										versionFeatures.getMaxDistanceScatteredFeatures_Shipwreck(),
 										versionFeatures.getMinDistanceScatteredFeatures_Shipwreck(),
 										versionFeatures.getValidBiomesAtMiddleOfChunk_Shipwreck(),
 										versionFeatures.getSeedForStructure_Shipwreck(),
+										versionFeatures.getShipwrecksAvoidMonuments(),
+										monumentLocationChecker,
+										versionFeatures.getUseTwoValuesForUpdate_Shipwreck(),
 										buggyStructureCoordinateMath,
 										versionFeatures.getMersenneTwister()),
 								new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.SHIPWRECK),

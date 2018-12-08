@@ -51,6 +51,8 @@ public class VersionFeatures {
 	private final Long seedForStructure_Shipwreck;
 	private final Byte maxDistanceScatteredFeatures_Shipwreck;
 	private final Byte minDistanceScatteredFeatures_Shipwreck;
+	private final Boolean shipwrecksAvoidMonuments;
+	private final Boolean useTwoValuesForUpdate_Shipwreck;
 	private final Boolean buggyStructureCoordinateMath;
 	private final Boolean mersenneTwister;
 
@@ -88,6 +90,8 @@ public class VersionFeatures {
 			Long seedForStructure_Shipwreck,
 			Byte maxDistanceScatteredFeatures_Shipwreck,
 			Byte minDistanceScatteredFeatures_Shipwreck,
+			Boolean shipwrecksAvoidMonuments,
+			Boolean useTwoValuesForUpdate_Shipwreck,
 			Boolean buggyStructureCoordinateMath,
 			Boolean mersenneTwister) {
 		this.enabledLayers = enabledLayers;
@@ -123,6 +127,8 @@ public class VersionFeatures {
 		this.seedForStructure_Shipwreck = seedForStructure_Shipwreck;
 		this.maxDistanceScatteredFeatures_Shipwreck = maxDistanceScatteredFeatures_Shipwreck;
 		this.minDistanceScatteredFeatures_Shipwreck = minDistanceScatteredFeatures_Shipwreck;
+		this.shipwrecksAvoidMonuments = shipwrecksAvoidMonuments;
+		this.useTwoValuesForUpdate_Shipwreck = useTwoValuesForUpdate_Shipwreck;
 		this.buggyStructureCoordinateMath = buggyStructureCoordinateMath;
 		this.mersenneTwister = mersenneTwister;
 	}
@@ -257,6 +263,14 @@ public class VersionFeatures {
 
 	public Byte getMinDistanceScatteredFeatures_Shipwreck() {
 		return minDistanceScatteredFeatures_Shipwreck;
+	}
+
+	public Boolean getShipwrecksAvoidMonuments() {
+		return shipwrecksAvoidMonuments;
+	}
+
+	public Boolean getUseTwoValuesForUpdate_Shipwreck() {
+		return useTwoValuesForUpdate_Shipwreck;
 	}
 
 	public Boolean getBuggyStructureCoordinateMath() {
