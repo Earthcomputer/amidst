@@ -1,6 +1,12 @@
 Amidst
 ======
 
+## Bedrock version installation instructions
+1. Download the latest version from [releases](https://github.com/Earthcomputer/amidst/releases).
+1. Download the latest Client zip of Bedrockified from the [Bedrockified releases page](https://github.com/Earthcomputer/bedrockified/releases), and put it in the same folder as Amidst.
+1. Make sure you have Minecraft 1.13.1 installed via the official Minecraft launcher (iirc the demo version should work fine if you don't own a copy of the game).
+1. Launch Amidst and select the Bedrockified profile.
+
 [![Build Status](https://travis-ci.org/toolbox4minecraft/amidst.svg?branch=master)](https://travis-ci.org/toolbox4minecraft/amidst)
 
 ## What is Amidst?
