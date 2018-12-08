@@ -69,7 +69,7 @@ public class WorldBuilder {
 				MovablePlayerList.dummy(),
 				versionFeatures,
 				biomeDataOracle,
-				new HeuristicWorldSpawnOracle(
+				versionFeatures.getWorldSpawnAlgorithmFactory().apply(
 						worldOptions.getWorldSeed().getLong(),
 						biomeDataOracle,
 						versionFeatures.getValidBiomesForStructure_Spawn()));

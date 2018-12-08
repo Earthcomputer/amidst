@@ -14,11 +14,13 @@ import amidst.mojangapi.world.icon.producer.StrongholdProducer_Base;
 import amidst.mojangapi.world.icon.producer.WorldIconProducer;
 import amidst.mojangapi.world.oracle.BiomeDataOracle;
 import amidst.mojangapi.world.oracle.SlimeChunkOracle;
+import amidst.mojangapi.world.oracle.WorldSpawnOracle;
 
 @Immutable
 public class VersionFeatures {
 	private final List<Integer> enabledLayers;
 	private final List<Biome> validBiomesForStructure_Spawn;
+	private final TriFunction<Long, BiomeDataOracle, List<Biome>, WorldSpawnOracle> worldSpawnAlgorithmFactory;
     private final Function<Long, SlimeChunkOracle> slimeChunkOracleFactory;
 	private final List<Biome> validBiomesAtMiddleOfChunk_Stronghold;
 	private final QuadFunction<Long, BiomeDataOracle, List<Biome>, VillageLocationChecker, WorldIconProducer<Void>> strongholdProducerFactory;
@@ -55,6 +57,7 @@ public class VersionFeatures {
 	public VersionFeatures(
 			List<Integer> enabledLayers,
 			List<Biome> validBiomesForStructure_Spawn,
+			TriFunction<Long, BiomeDataOracle, List<Biome>, WorldSpawnOracle> worldSpawnAlgorithmFactory,
 			Function<Long, SlimeChunkOracle> slimeChunkOracleFactory,
 			List<Biome> validBiomesAtMiddleOfChunk_Stronghold,
 			QuadFunction<Long, BiomeDataOracle, List<Biome>, VillageLocationChecker, WorldIconProducer<Void>> strongholdProducerFactory,
@@ -89,6 +92,7 @@ public class VersionFeatures {
 			Boolean mersenneTwister) {
 		this.enabledLayers = enabledLayers;
 		this.validBiomesForStructure_Spawn = validBiomesForStructure_Spawn;
+		this.worldSpawnAlgorithmFactory = worldSpawnAlgorithmFactory;
 		this.slimeChunkOracleFactory = slimeChunkOracleFactory;
 		this.validBiomesAtMiddleOfChunk_Stronghold = validBiomesAtMiddleOfChunk_Stronghold;
 		this.strongholdProducerFactory = strongholdProducerFactory;
@@ -129,6 +133,10 @@ public class VersionFeatures {
 
 	public List<Biome> getValidBiomesForStructure_Spawn() {
 		return validBiomesForStructure_Spawn;
+	}
+
+	public TriFunction<Long, BiomeDataOracle, List<Biome>, WorldSpawnOracle> getWorldSpawnAlgorithmFactory() {
+		return worldSpawnAlgorithmFactory;
 	}
 
     public Function<Long, SlimeChunkOracle> getSlimeChunkOracleFactory() {

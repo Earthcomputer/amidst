@@ -11,9 +11,7 @@ import amidst.mojangapi.minecraftinterface.RecognisedVersion;
 import amidst.mojangapi.world.biome.Biome;
 import amidst.mojangapi.world.icon.locationchecker.*;
 import amidst.mojangapi.world.icon.producer.*;
-import amidst.mojangapi.world.oracle.BiomeDataOracle;
-import amidst.mojangapi.world.oracle.SlimeChunkOracle;
-import amidst.mojangapi.world.oracle.SlimeChunkOracle_Bedrock;
+import amidst.mojangapi.world.oracle.*;
 
 @Immutable
 public enum DefaultVersionFeatures {
@@ -23,6 +21,7 @@ public enum DefaultVersionFeatures {
 		return new VersionFeatures(
 				INSTANCE.enabledLayers.getValue(version),
 				INSTANCE.validBiomesForStructure_Spawn.getValue(version),
+				INSTANCE.worldSpawnAlgorithmFactory.getValue(version),
 				INSTANCE.slimeChunkOracleFactory.getValue(version),
 				INSTANCE.validBiomesAtMiddleOfChunk_Stronghold.getValue(version),
 				INSTANCE.strongholdProducerFactory.getValue(version),
@@ -59,6 +58,7 @@ public enum DefaultVersionFeatures {
 
 	private final VersionFeature<List<Integer>> enabledLayers;
 	private final VersionFeature<List<Biome>> validBiomesForStructure_Spawn;
+	private final VersionFeature<TriFunction<Long, BiomeDataOracle, List<Biome>, WorldSpawnOracle>> worldSpawnAlgorithmFactory;
 	private final VersionFeature<Function<Long, SlimeChunkOracle>> slimeChunkOracleFactory;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_Stronghold;
 	private final VersionFeature<QuadFunction<Long, BiomeDataOracle, List<Biome>, VillageLocationChecker, WorldIconProducer<Void>>> strongholdProducerFactory;
@@ -128,6 +128,12 @@ public enum DefaultVersionFeatures {
 						Biome.forestHills,
 						Biome.jungle,
 						Biome.jungleHills
+				).construct();
+		this.worldSpawnAlgorithmFactory = VersionFeature.<TriFunction<Long, BiomeDataOracle, List<Biome>, WorldSpawnOracle>> builder()
+				.init(
+						(seed, biomeDataOracle, allowedBiomes) -> new HeuristicWorldSpawnOracle(seed, biomeDataOracle, allowedBiomes)
+				).since(RecognisedVersion.BEDROCKIFIED,
+						(seed, biomeDataOracle, allowedBiomes) -> new BedrockWorldSpawnOracle(seed, biomeDataOracle, allowedBiomes)
 				).construct();
 		this.slimeChunkOracleFactory = VersionFeature.<Function<Long, SlimeChunkOracle>> builder()
                 .init(
