@@ -7,11 +7,10 @@ import java.util.function.Function;
 import amidst.documentation.Immutable;
 import amidst.mojangapi.world.biome.Biome;
 import amidst.mojangapi.world.icon.locationchecker.LocationChecker;
-import amidst.mojangapi.world.icon.locationchecker.MineshaftAlgorithm_Base;
 import amidst.mojangapi.world.icon.locationchecker.StructureAlgorithm;
 import amidst.mojangapi.world.icon.locationchecker.VillageLocationChecker;
-import amidst.mojangapi.world.icon.producer.StrongholdProducer_Base;
 import amidst.mojangapi.world.icon.producer.WorldIconProducer;
+import amidst.mojangapi.world.icon.producer.CachedWorldIconProducer;
 import amidst.mojangapi.world.oracle.BiomeDataOracle;
 import amidst.mojangapi.world.oracle.SlimeChunkOracle;
 import amidst.mojangapi.world.oracle.WorldSpawnOracle;
@@ -27,6 +26,7 @@ public class VersionFeatures {
 	private final Byte maxDistanceScatteredFeatures_Village;
 	private final Byte minDistanceScatteredFeatures_Village;
 	private final List<Biome> validBiomesForStructure_Village;
+	private final List<Biome> validBiomesForStructure_PillagerOutpost;
 	private final Boolean doComplexVillageCheck;
 	private final List<Biome> validBiomesAtMiddleOfChunk_DesertTemple;
 	private final List<Biome> validBiomesAtMiddleOfChunk_Igloo;
@@ -35,7 +35,7 @@ public class VersionFeatures {
 	private final List<Biome> validBiomesAtMiddleOfChunk_OceanRuins;
 	private final List<Biome> validBiomesAtMiddleOfChunk_Shipwreck;
 	private final QuadFunction<Long, Byte, Byte, Boolean, StructureAlgorithm> villageStructureAlgorithmFactory;
-	private final BiFunction<Long, Boolean, MineshaftAlgorithm_Base> mineshaftAlgorithmFactory;
+	private final BiFunction<Long, Boolean, LocationChecker> mineshaftAlgorithmFactory;
 	private final Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker> oceanMonumentLocationCheckerFactory;
 	private final List<Biome> validBiomesAtMiddleOfChunk_OceanMonument;
 	private final List<Biome> validBiomesForStructure_OceanMonument;
@@ -66,6 +66,7 @@ public class VersionFeatures {
 			Byte maxDistanceScatteredFeatures_Village,
 			Byte minDistanceScatteredFeatures_Village,
 			List<Biome> validBiomesForStructure_Village,
+			List<Biome> validBiomesForStructure_PillagerOutpost,
 			Boolean doComplexVillageCheck,
 			List<Biome> validBiomesAtMiddleOfChunk_DesertTemple,
 			List<Biome> validBiomesAtMiddleOfChunk_Igloo,
@@ -74,7 +75,7 @@ public class VersionFeatures {
 			List<Biome> validBiomesAtMiddleOfChunk_OceanRuins,
 			List<Biome> validBiomesAtMiddleOfChunk_Shipwreck,
 			QuadFunction<Long, Byte, Byte, Boolean, StructureAlgorithm> villageStructureAlgorithmFactory,
-			BiFunction<Long, Boolean, MineshaftAlgorithm_Base> mineshaftAlgorithmFactory,
+			BiFunction<Long, Boolean, LocationChecker> mineshaftAlgorithmFactory,
 			Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker> oceanMonumentLocationCheckerFactory,
 			List<Biome> validBiomesAtMiddleOfChunk_OceanMonument,
 			List<Biome> validBiomesForStructure_OceanMonument,
@@ -103,6 +104,7 @@ public class VersionFeatures {
 		this.maxDistanceScatteredFeatures_Village = maxDistanceScatteredFeatures_Village;
 		this.minDistanceScatteredFeatures_Village = minDistanceScatteredFeatures_Village;
 		this.validBiomesForStructure_Village = validBiomesForStructure_Village;
+		this.validBiomesForStructure_PillagerOutpost = validBiomesForStructure_PillagerOutpost;
 		this.doComplexVillageCheck = doComplexVillageCheck;
 		this.validBiomesAtMiddleOfChunk_DesertTemple = validBiomesAtMiddleOfChunk_DesertTemple;
 		this.validBiomesAtMiddleOfChunk_Igloo = validBiomesAtMiddleOfChunk_Igloo;
@@ -168,7 +170,11 @@ public class VersionFeatures {
 	public List<Biome> getValidBiomesForStructure_Village() {
 		return validBiomesForStructure_Village;
 	}
-	
+
+	public List<Biome> getValidBiomesForStructure_PillagerOutpost() {
+		return validBiomesForStructure_PillagerOutpost;
+	}
+
 	public Boolean getDoComplexVillageCheck() {
 		return doComplexVillageCheck;
 	}
@@ -188,11 +194,11 @@ public class VersionFeatures {
 	public List<Biome> getValidBiomesAtMiddleOfChunk_WitchHut() {
 		return validBiomesAtMiddleOfChunk_WitchHut;
 	}
-	
+
 	public List<Biome> getValidBiomesAtMiddleOfChunk_OceanRuins() {
 		return validBiomesAtMiddleOfChunk_OceanRuins;
 	}
-	
+
 	public List<Biome> getValidBiomesAtMiddleOfChunk_Shipwreck() {
 		return validBiomesAtMiddleOfChunk_Shipwreck;
 	}
@@ -201,7 +207,7 @@ public class VersionFeatures {
 		return villageStructureAlgorithmFactory;
 	}
 
-	public BiFunction<Long, Boolean, MineshaftAlgorithm_Base> getMineshaftAlgorithmFactory() {
+	public BiFunction<Long, Boolean, LocationChecker> getMineshaftAlgorithmFactory() {
 		return mineshaftAlgorithmFactory;
 	}
 
@@ -236,7 +242,7 @@ public class VersionFeatures {
 	public Long getSeedForStructure_WitchHut() {
 		return seedForStructure_WitchHut;
 	}
-	
+
 	public Long getSeedForStructure_OceanRuins() {
 		return seedForStructure_OceanRuins;
 	}
@@ -252,11 +258,11 @@ public class VersionFeatures {
 	public Boolean getUseTwoValuesForUpdate_OceanRuins() {
 		return useTwoValuesForUpdate_OceanRuins;
 	}
-	
+
 	public Long getSeedForStructure_Shipwreck() {
 		return seedForStructure_Shipwreck;
 	}
-	
+
 	public Byte getMaxDistanceScatteredFeatures_Shipwreck() {
 		return maxDistanceScatteredFeatures_Shipwreck;
 	}

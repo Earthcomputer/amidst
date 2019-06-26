@@ -28,6 +28,7 @@ public enum DefaultVersionFeatures {
 				INSTANCE.maxDistanceScatteredFeatures_Village.getValue(version),
 				INSTANCE.minDistanceScatteredFeatures_Village.getValue(version),
 				INSTANCE.validBiomesForStructure_Village.getValue(version),
+				INSTANCE.validBiomesForStructure_PillagerOutpost.getValue(version),
 				INSTANCE.doComplexVillageCheck.getValue(version),
 				INSTANCE.validBiomesAtMiddleOfChunk_DesertTemple.getValue(version),
 				INSTANCE.validBiomesAtMiddleOfChunk_Igloo.getValue(version),
@@ -67,6 +68,7 @@ public enum DefaultVersionFeatures {
 	private final VersionFeature<Byte> maxDistanceScatteredFeatures_Village;
 	private final VersionFeature<Byte> minDistanceScatteredFeatures_Village;
 	private final VersionFeature<List<Biome>> validBiomesForStructure_Village;
+	private final VersionFeature<List<Biome>> validBiomesForStructure_PillagerOutpost;
 	private final VersionFeature<Boolean> doComplexVillageCheck;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_DesertTemple;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_Igloo;
@@ -75,7 +77,7 @@ public enum DefaultVersionFeatures {
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_OceanRuins;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_Shipwreck;
 	private final VersionFeature<QuadFunction<Long, Byte, Byte, Boolean, StructureAlgorithm>> villageStructureAlgorithmFactory;
-	private final VersionFeature<BiFunction<Long, Boolean, MineshaftAlgorithm_Base>> mineshaftAlgorithmFactory;
+	private final VersionFeature<BiFunction<Long, Boolean, LocationChecker>> mineshaftAlgorithmFactory;
 	private final VersionFeature<Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker>> oceanMonumentLocationCheckerFactory;
 	private final VersionFeature<List<Biome>> validBiomesAtMiddleOfChunk_OceanMonument;
 	private final VersionFeature<List<Biome>> validBiomesForStructure_OceanMonument;
@@ -200,11 +202,30 @@ public enum DefaultVersionFeatures {
 						Biome.savanna
 				).sinceExtend(RecognisedVersion._16w20a,
 						Biome.taiga
+				).sinceExtend(RecognisedVersion._18w49a,
+						Biome.icePlains
                 ).since(RecognisedVersion.BEDROCKIFIED,
                         Biome.plains,
                         Biome.desert,
                         Biome.savanna,
                         Biome.icePlains
+				).construct();
+		this.validBiomesForStructure_PillagerOutpost = VersionFeature.<Biome> listBuilder()
+				.init(
+						// this is for the enable all layers function
+						Biome.plains,
+						Biome.desert,
+						Biome.savanna,
+						Biome.taiga,
+						Biome.icePlains
+				).since(RecognisedVersion._12w03a
+				).sinceExtend(RecognisedVersion._18w47b,
+						Biome.plains,
+						Biome.desert,
+						Biome.savanna,
+						Biome.taiga
+				).sinceExtend(RecognisedVersion._18w49a,
+						Biome.icePlains
 				).construct();
 		this.doComplexVillageCheck = VersionFeature.<Boolean> builder()
 				.init(
@@ -237,6 +258,9 @@ public enum DefaultVersionFeatures {
 						Biome.jungle
 				).sinceExtend(RecognisedVersion._1_4_2,
 						Biome.jungleHills // TODO: jungle temples spawn only since 1.4.2 in jungle hills?
+				).sinceExtend(RecognisedVersion._19w06a,
+						Biome.bambooJungle,
+						Biome.bambooJungleHills
 				).construct();
 		this.validBiomesAtMiddleOfChunk_WitchHut = VersionFeature.<Biome> listBuilder()
 				.init(
@@ -347,13 +371,15 @@ public enum DefaultVersionFeatures {
                                         false,
                                         mersenneTwister)
                 ).construct();
-		this.mineshaftAlgorithmFactory = VersionFeature.<BiFunction<Long, Boolean, MineshaftAlgorithm_Base>> builder()
+		this.mineshaftAlgorithmFactory = VersionFeature.<BiFunction<Long, Boolean, LocationChecker>> builder()
 				.init(
 						(seed, mersenneTwister) -> new MineshaftAlgorithm_Original(seed, mersenneTwister)
 				).since(RecognisedVersion._1_4_2,
-						(seed, mersenneTwister) -> new MineshaftAlgorithm_ChanceBased(seed, 0.01D, mersenneTwister)
+						(seed, mersenneTwister) -> new MineshaftAlgorithm_ChanceBased(seed, 0.01D, true, mersenneTwister)
 				).since(RecognisedVersion._1_7_2,
-						(seed, mersenneTwister) -> new MineshaftAlgorithm_ChanceBased(seed, 0.004D, mersenneTwister)
+						(seed, mersenneTwister) -> new MineshaftAlgorithm_ChanceBased(seed, 0.004D, true, mersenneTwister)
+				).since(RecognisedVersion._18w06a,
+						(seed, mersenneTwister) -> new MineshaftAlgorithm_ChanceBased(seed, 0.01D, false, mersenneTwister)
 				).construct();
 		this.oceanMonumentLocationCheckerFactory = VersionFeature.<Function5<Long, BiomeDataOracle, List<Biome>, List<Biome>, Boolean, LocationChecker>> builder()
 				.init(
@@ -467,7 +493,7 @@ public enum DefaultVersionFeatures {
 				).since(RecognisedVersion.BEDROCKIFIED,
 						true
 				).construct();
-				
+
 		this.buggyStructureCoordinateMath = VersionFeature.<Boolean> builder()
 				.init(
 						false

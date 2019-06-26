@@ -134,13 +134,25 @@ public class WorldBuilder {
 						versionFeatures.getValidBiomesAtMiddleOfChunk_Stronghold(),
 						villageLocationChecker),
 				new PlayerProducer(movablePlayerList),
-				new StructureProducer<>(
-						Resolution.CHUNK,
-						4,
-						villageLocationChecker,
-						new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.VILLAGE),
-						Dimension.OVERWORLD,
-						false),
+				new MultiProducer<>(
+						new StructureProducer<>(
+							Resolution.CHUNK,
+							4,
+							villageLocationChecker,
+							new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.VILLAGE),
+							Dimension.OVERWORLD,
+							false),
+						new StructureProducer<>(
+							Resolution.CHUNK,
+							4,
+							new PillagerOutpostLocationChecker(
+									seed,
+									biomeDataOracle,
+									versionFeatures.getValidBiomesForStructure_PillagerOutpost()),
+							new ImmutableWorldIconTypeProvider(DefaultWorldIconTypes.PILLAGER_OUTPOST),
+							Dimension.OVERWORLD,
+							false)
+				),
 				new MultiProducer<>(
 						new StructureProducer<>(
 								Resolution.CHUNK,

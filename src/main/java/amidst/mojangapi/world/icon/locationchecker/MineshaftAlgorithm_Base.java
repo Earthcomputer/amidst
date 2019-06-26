@@ -17,16 +17,29 @@ public abstract class MineshaftAlgorithm_Base implements LocationChecker {
 
 	@Override
 	public boolean isValidLocation(int chunkX, int chunkY) {
+		/**
+		 * Note: even if this check succeeds, the mineshaft may fail to generate if the
+		 * central room isn't in a suitable location (for example, if it spawns inside
+		 * a cave or a ravine). We can't check these cases, so we will have to accept
+		 * some false positives.
+		 */
 		Random random = mersenneTwister ? MinecraftInterface.createBedrockRandom(seed) : new Random(seed);
 
-		long var13 = (long) chunkX * random.nextLong();
-		long var15 = (long) chunkY * random.nextLong();
+		long var13 = chunkX * (mersenneTwister ? random.nextInt() : random.nextLong());
+		long var15 = chunkY * (mersenneTwister ? random.nextInt() : random.nextLong());
 
 		random.setSeed(var13 ^ var15 ^ seed);
-		random.nextInt();
+		if(doExtraCheck())
+			random.nextInt();
 
-		return getResult(chunkX, chunkY, random) && random.nextInt(80) < Math.max(Math.abs(chunkX), Math.abs(chunkY));
+		if(!getResult(chunkX, chunkY, random))
+			return false;
+		return !doExtraCheck() || random.nextInt(80) < Math.max(Math.abs(chunkX), Math.abs(chunkY));
 	}
 
 	protected abstract boolean getResult(int chunkX, int chunkY, Random random);
+
+	protected boolean doExtraCheck() {
+		return true;
+	}
 }
