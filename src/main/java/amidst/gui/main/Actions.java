@@ -201,7 +201,7 @@ public class Actions {
 	public void copySeedToClipboard() {
 		ViewerFacade viewerFacade = viewerFacadeSupplier.get();
 		if (viewerFacade != null) {
-			String seed = "" + viewerFacade.getWorldSeed().getLong();
+			String seed = "" + (int)viewerFacade.getWorldSeed().getLong(); // BEDROCK: integer seed
 			StringSelection selection = new StringSelection(seed);
 			Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
 		}
@@ -213,7 +213,7 @@ public class Actions {
 		if (viewerFacade != null) {
 			BufferedImage image = viewerFacade.createScreenshot();
 			String suggestedFilename = "screenshot_" + viewerFacade.getWorldType().getFilenameText() + "_"
-					+ viewerFacade.getWorldSeed().getLong() + ".png";
+					+ (int)viewerFacade.getWorldSeed().getLong() + ".png"; // BEDROCK: integer seed
 			File file = dialogs.askForScreenshotSaveFile(suggestedFilename);
 			if (file != null) {
 				file = appendPNGFileExtensionIfNecessary(file);

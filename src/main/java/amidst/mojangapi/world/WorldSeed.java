@@ -30,7 +30,8 @@ public class WorldSeed {
 	}
 
 	public static WorldSeed random() {
-		return new WorldSeed(new Random().nextLong(), null, WorldSeedType.RANDOM);
+		// BEDROCK: integer seed
+		return new WorldSeed(new Random().nextInt(), null, WorldSeedType.RANDOM);
 	}
 
 	public static WorldSeed fromUserInput(String input) {
@@ -38,7 +39,7 @@ public class WorldSeed {
 			return random();
 		}
 		try {
-			long seed = Long.parseLong(input);
+			int seed = Integer.parseInt(input); // BEDROCK: integer seed
 			return new WorldSeed(seed, null, WorldSeedType.NUMERIC);
 		} catch (NumberFormatException err) {
 			int seed = input.hashCode();
@@ -47,15 +48,15 @@ public class WorldSeed {
 	}
 
 	public static WorldSeed fromSaveGame(long seed) {
-		return new WorldSeed(seed, null, WorldSeedType.SAVE_GAME);
+		return new WorldSeed((int) seed, null, WorldSeedType.SAVE_GAME);
 	}
 
-	private final long seed;
+	private final int seed; // BEDROCK: integer seed
 	private final String text;
 	private final WorldSeedType type;
 	private final String label;
 
-	private WorldSeed(long seed, String text, WorldSeedType type) {
+	private WorldSeed(int seed, String text, WorldSeedType type) {
 		this.seed = seed;
 		this.text = text;
 		this.type = type;
@@ -63,7 +64,7 @@ public class WorldSeed {
 	}
 
 	public long getLong() {
-		return seed;
+		return Integer.toUnsignedLong(seed);
 	}
 
 	public String getText() {
