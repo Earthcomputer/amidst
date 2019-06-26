@@ -77,7 +77,7 @@ public class ListVersionFeatureBuilder<V> {
 			throw new IllegalStateException("you need to specify a default value first");
 		} else if (previous != null && version == previous) {
 			throw new IllegalStateException("you can only specify one value per version");
-		} else if (previous != null && RecognisedVersion.isOlder(version, previous)) {
+		} else if ((previous != null && RecognisedVersion.isOlder(version, previous) && version != RecognisedVersion.BEDROCKIFIED) || previous == RecognisedVersion.BEDROCKIFIED) {
 			throw new IllegalStateException("you have to specify versions in ascending order");
 		} else {
 			previous = version;

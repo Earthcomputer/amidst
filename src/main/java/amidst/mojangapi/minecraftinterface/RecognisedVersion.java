@@ -24,7 +24,6 @@ public enum RecognisedVersion {
 	// TODO: Remove these versions before V1_0?
 	// TODO: stronghold reset on V1_9pre4?
 	UNKNOWN,
-	BEDROCKIFIED("Bedrockified", null),
 	_1_14_3_pre4("1.14.3-pre4", "bhqcojahnaggvzqdxt[Jxpwvwtcebenzgrhrkcoxrerfzo"),                                        // matches the launcher version id: 1.14.3-pre3  1.14.3-pre4
 	_1_14_3_pre2("1.14.3-pre2", "bhpcoiahnaggvzqdxt[Jxpwvwtcebenzgrhrkcowrerfzo"),                                        // matches the launcher version id: 1.14.3-pre2
 	_1_14_3_pre1("1.14.3-pre1", "bhncogahlagevxqcxr[Jxnwtwrcebelzergrjcourdrezm"),                                        // matches the launcher version id: 1.14.3-pre1
@@ -53,6 +52,7 @@ public enum RecognisedVersion {
 	_18w44a    ("18w44a",     "aeyadtuppewd[Jvzvlvjbyaxcxqqjqncfkqgqhxx"),                                                // matches the launcher version id: 18w44a
 	_18w43c    ("18w43c",     "aekyfuopdwc[Jvyvkvibyawjxpqiqmcecqfqgxw"),                                                 // matches the launcher version id: 18w43c
 	_1_13_2	   ("1.13.2",     "aduxrubomvp[Jvluxuvbvavlxbprpvcctpopp"),                                                   // matches the launcher version id: 1.13.2-pre1  1.13.2-pre2  1.13.2
+	BEDROCKIFIED("Bedrockified", null),
 	_1_13_1    ("1.13.1",     "aduxrubomvp[Jvluxuvbvavkxbprpvccspopp"),                                                   // matches the launcher version id: 1.13.1-pre1  1.13.1-pre2  1.13.1
 	_18w33a    ("18w33a",     "adtxquaolvo[Jvkuwuubvavjxapqpuccrpnpo"),                                                   // matches the launcher version id: 18w33a
 	_18w32a    ("18w32a",     "adsxquaolvo[Jvkuwuubvavixapqpuccqpnpo"),                                                   // matches the launcher version id: 18w32a
