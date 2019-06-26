@@ -206,9 +206,14 @@ public enum DefaultVersionFeatures {
 						Biome.icePlains
                 ).since(RecognisedVersion.BEDROCKIFIED,
                         Biome.plains,
+                        Biome.sunflowerPlains,
                         Biome.desert,
                         Biome.savanna,
-                        Biome.icePlains
+                        Biome.icePlains,
+						Biome.taiga,
+						Biome.taigaHills,
+						Biome.coldTaiga,
+						Biome.coldTaigaHills
 				).construct();
 		this.validBiomesForStructure_PillagerOutpost = VersionFeature.<Biome> listBuilder()
 				.init(
@@ -351,17 +356,6 @@ public enum DefaultVersionFeatures {
                 .init(
                         (seed, maxDistanceScatteredFeatures, minDistanceScatteredFeatures, mersenneTwister) ->
                                 new StructureAlgorithm(
-                                        seed,
-                                        341873128712L,
-                                        132897987541L,
-                                        10387312L,
-                                        maxDistanceScatteredFeatures,
-                                        minDistanceScatteredFeatures,
-                                        false,
-                                        mersenneTwister)
-                ).since(RecognisedVersion.BEDROCKIFIED,
-                        (seed, maxDistanceScatteredFeatures, minDistanceScatteredFeatures, mersenneTwister) ->
-                                new BedrockVillageStructureAlgorithm(
                                         seed,
                                         341873128712L,
                                         132897987541L,
